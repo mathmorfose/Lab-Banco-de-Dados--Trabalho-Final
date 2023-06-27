@@ -1,5 +1,7 @@
 import os
 from bd import BANCO_DADOS as bd
+from utils import limpaTela
+
 class Escuderia:
     def __init__(self, nome, vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano):
         self.nome = nome
@@ -9,7 +11,7 @@ class Escuderia:
         self.ultimo_ano = ultimo_ano
     
     def tela_escuderia(self):
-        os.system('cls')
+        limpaTela()
         print(f"Você está logado como: {self.nome}                      \n\n \
     Quantidade de vitórias: {self.vitorias_quantidade}                  \n \
     Quantidade de pilotos diferentes que já correram pela escuderia: {self.pilotos_quantidade}     \n \
@@ -31,7 +33,7 @@ class Escuderia:
 
     def consultar_piloto(self):
         while True:
-            os.system('cls')
+            limpaTela()
             print(f"Consultar se piloto já correu pela escuderia            \n\n \
    Digite o forename do piloto e pressione enter                            \n")
 

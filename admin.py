@@ -1,5 +1,7 @@
 import os
 from bd import BANCO_DADOS as bd
+from utils import limpaTela
+
 class Admin:
     def __init__(self, pilotos_quantidade, escuderias_quantidade, corridas_quantidade, temporadas_quantidade):
         self.pilotos_quantidade = pilotos_quantidade
@@ -8,7 +10,7 @@ class Admin:
         self.temporadas_quantidade = temporadas_quantidade
     
     def tela_admin(self):
-        os.system('cls')
+        limpaTela()
         print(f"Você está logado como: Administrador                  \n\n \
     Quantidade de pilotos cadastrados: {self.pilotos_quantidade}      \n \
     Quantidade de escuderias cadastradas: {self.escuderias_quantidade}\n \
@@ -30,7 +32,7 @@ class Admin:
 
     def cadastrar_escuderia(self):
         while True:
-            os.system('cls')
+            limpaTela()
             print(f"Cadastro de Escuderia                                   \n\n \
    Digite o valor de cada dado e pressione enter                            \n")
 
@@ -68,7 +70,7 @@ class Admin:
     
     def cadastrar_piloto(self):
         while True:
-            os.system('cls')
+            limpaTela()
             print(f"Cadastro de Piloto                                      \n\n \
    Digite o valor de cada dado e pressione enter                            \n")
 
