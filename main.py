@@ -97,5 +97,9 @@ while True:
     if fazer_autenticacao(username, password):
         break
     else:
-        print("\nNome de usuário ou senha incorretos. Pressione Enter para tentar novamente.")
-        input()
+        print("\nNome de usuário ou senha incorretos!\n")
+        print("- Pressione [ENTER] para tentar novamente")
+        print("- Digite 'sair' para encerrar")
+        resposta = input()
+        if resposta == 'sair':
+            break
