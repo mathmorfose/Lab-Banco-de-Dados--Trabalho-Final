@@ -117,3 +117,14 @@ FROM driver;
 INSERT INTO users (login, password, tipo, idoriginal)
 SELECT CONCAT(constructorref, '_c'), MD5(constructorref), 'Escuderia', constructorid
 FROM constructors;
+
+-- Altera a tabela Driver para o ID ser sequencial e adicionado automaticamente ao fazer uma nova inserção
+CREATE SEQUENCE my_serial AS integer START 860 OWNED BY DRIVER.DriverId;
+ALTER TABLE driver ALTER COLUMN DriverId SET DEFAULT nextval('my_serial');
+
+-- Altera a tabela Constructor para o ID ser sequencial e adicionado automaticamente ao fazer uma nova inserção
+CREATE SEQUENCE my_serial2 AS integer START 216 OWNED BY CONSTRUCTORS.ConstructorId;
+ALTER TABLE constructors ALTER COLUMN ConstructorId SET DEFAULT nextval('my_serial2');
+
+
+

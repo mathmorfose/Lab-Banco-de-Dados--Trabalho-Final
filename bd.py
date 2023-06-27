@@ -27,12 +27,8 @@ class BANCO_DADOS():
     def insert_construct(constructor_ref, name, nationality, url):
         with conn.cursor() as cursor:
             try:
-                query = "SELECT MAX(constructorid) FROM CONSTRUCTORS"
-                cursor.execute(query)
-                constructor_id = cursor.fetchall()[0][0] + 1
-                
-                sql = "INSERT INTO Constructors (ConstructorId, ConstructorRef, Name, Nationality, URL) VALUES (%s, %s, %s, %s, %s)"
-                values = (constructor_id, constructor_ref, name, nationality, url)
+                sql = "INSERT INTO Constructors (ConstructorRef, Name, Nationality, URL) VALUES (%s, %s, %s, %s)"
+                values = (constructor_ref, name, nationality, url)
                 cursor.execute(sql, values)
 
                 # Confirmar a transação
@@ -49,14 +45,11 @@ class BANCO_DADOS():
     def insert_driver(driver_ref, number, code, forename, surname, date_of_birth, nationality):
         with conn.cursor() as cursor:
             try:
-                query = "SELECT MAX(DriverId) FROM DRIVER"
-                cursor.execute(query)
-                driver_id = cursor.fetchall()[0][0] + 1
 
-                sql = "INSERT INTO Driver (driverid, driverRef, number, code, forename, surname, dob, nationality) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-                values = (driver_id, driver_ref, number, code, forename,
+                sql = "INSERT INTO Driver (driverRef, number, code, forename, surname, dob, nationality) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                values = (driver_ref, number, code, forename,
                         surname, date_of_birth, nationality)
-                print(sql, values)
+                
                 cursor.execute(sql, values)
                 
                 # Confirmar a transação
