@@ -32,17 +32,6 @@ def registrar_login(user_id):
         print("registrou n")
 
 def fazer_login(username, password):
-    if username == 'admin' and password == 'admin':
-        admin = criar_admin()
-        admin.tela_admin()
-        return True
-    else: 
-        if verificar_tipo_usuario(username, password):
-            return True
-        
-    return False
-
-def verificar_tipo_usuario(username, password):
     query = f"  SELECT * \
                 FROM users \
                 WHERE login = '{username}' and password = MD5('{password}')"
@@ -51,7 +40,12 @@ def verificar_tipo_usuario(username, password):
     if user:
         # Trocar recebimento do bd como dicionario para ficar mais intuitivo, isso implica em alterar como esta outras chamadas ao bd tambem
         #user['Tipo'] = Escuderia
-        if user[0][3] == "Escuderia":
+        tipo = user[0][3]
+        if tipo == 'Administrador':
+            admin = criar_admin()
+            admin.tela_admin()
+            return True
+        elif tipo == "Escuderia":
             escuderia = criar_escuderia(username)
             registrar_login(user[0][0])
             escuderia.tela_escuderia()
