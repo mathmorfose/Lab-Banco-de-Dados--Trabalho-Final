@@ -4,7 +4,7 @@ import os
 from admin import Admin
 from escuderia import Escuderia
 from bd import BANCO_DADOS as bd
-from utils import limpaTela
+from utils import limpaTela, limpaInput
 
 def criar_admin():
     pilotos_qnt = bd.select("SELECT COUNT(*) FROM driver")[0][0]
@@ -32,7 +32,6 @@ def registrar_login(user_id):
         print("registrou n")
 
 def fazer_login(username, password):
-    
     if username == 'admin' and password == 'admin':
         admin = criar_admin()
         admin.tela_admin()
@@ -76,12 +75,6 @@ def carregando():
     time.sleep(0.5)
     print(".")
 
-def fazer_autenticacao(username, password):
-
-    if(fazer_login(username, password)):
-        return True
-    return False
-        
 
 while True:
     limpaTela()
@@ -89,14 +82,14 @@ while True:
                                                                         \n\
     Digite o usuario e pressione enter, repita para a senha.            \n")
 
-    username = input("Usuário: ")
-    password = input("Senha: ")
+    username = limpaInput(input("Usuário: "))
+    password = limpaInput(input("Senha: "))
 
     print("\n                       Autenticando", end="")
 
     #carregando()
 
-    if fazer_autenticacao(username, password):
+    if fazer_login(username, password):
         break
     else:
         print("\nNome de usuário ou senha incorretos!\n")
