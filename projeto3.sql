@@ -1,4 +1,5 @@
 -- Criando a tabela USERS
+DROP TABLE IF EXISTS USERS CASCADE;
 CREATE TABLE USERS (
   UserId SERIAL PRIMARY KEY,
   Login VARCHAR(50) UNIQUE NOT NULL,
@@ -8,20 +9,8 @@ CREATE TABLE USERS (
   CONSTRAINT CHK_TIPO CHECK (Tipo IN ('Administrador', 'Escuderia', 'Piloto'))
 );
 
--- Criando função para calcular o hash md5 da senha
-CREATE OR REPLACE FUNCTION md5_password()
-  RETURNS TRIGGER AS $$
-BEGIN
-  NEW.Password = MD5(NEW.Password);
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Criação do gatilho para chamar a função antes de inserir ou atualizar um registro na tabela
-CREATE TRIGGER trigger_md5_password
-  BEFORE INSERT OR UPDATE ON USERS
-  FOR EACH ROW
-  EXECUTE FUNCTION md5_password();
+DROP TRIGGER IF EXISTS trigger_md5_password ON USERS;
+DROP FUNCTION IF EXISTS md5_password();
 
 -- Criação de funções e gatilhos para a inserção automática de pilotos e escuderias na tabela users
 
@@ -29,17 +18,13 @@ CREATE TRIGGER trigger_md5_password
 CREATE OR REPLACE FUNCTION insert_piloto_user()
   RETURNS TRIGGER AS $$
 BEGIN
-  -- Verificar se o login já está em uso
-  IF EXISTS (
-    SELECT 1 FROM USERS WHERE Login = NEW.DriverRef || '_d'
-  ) THEN
-    RAISE EXCEPTION 'O login informado já está em uso.';
-  ELSE
-    -- Inserir na tabela USERS
-    INSERT INTO USERS (Login, Password, Tipo, IdOriginal)
-    VALUES (NEW.DriverRef || '_d', MD5(NEW.DriverRef), 'Piloto', NEW.DriverId);
-    RETURN NEW;
-  END IF;
+  -- Inserir na tabela USERS
+  INSERT INTO USERS (Login, Password, Tipo, IdOriginal)
+  VALUES (NEW.DriverRef || '_d', MD5(NEW.DriverRef), 'Piloto', NEW.DriverId);
+  RETURN NEW;
+EXCEPTION
+  WHEN unique_violation THEN
+    RAISE EXCEPTION 'O login informado já está em uso.' USING ERRCODE='23505';
 END;
 $$ LANGUAGE plpgsql;
 
@@ -53,19 +38,15 @@ CREATE TRIGGER trigger_insert_piloto_user
 CREATE OR REPLACE FUNCTION update_piloto_user()
   RETURNS TRIGGER AS $$
 BEGIN
-  -- Verificar se o novo login já está em uso
-  IF EXISTS (
-    SELECT 1 FROM USERS WHERE Login = NEW.DriverRef || '_d' AND IdOriginal <> NEW.DriverId
-  ) THEN
-    RAISE EXCEPTION 'O login informado já está em uso.';
-  ELSE
-    -- Atualizar na tabela USERS
-    UPDATE USERS
-    SET Login = NEW.DriverRef || '_d',
-        Password = MD5(NEW.DriverRef)
-    WHERE IdOriginal = NEW.DriverId AND Tipo = 'Piloto';
-    RETURN NEW;
-  END IF;
+  -- Atualizar na tabela USERS
+  UPDATE USERS
+  SET Login = NEW.DriverRef || '_d',
+      Password = MD5(NEW.DriverRef)
+  WHERE IdOriginal = NEW.DriverId AND Tipo = 'Piloto';
+  RETURN NEW;
+EXCEPTION
+  WHEN unique_violation THEN
+    RAISE EXCEPTION 'O login informado já está em uso.' USING ERRCODE='23505';
 END;
 $$ LANGUAGE plpgsql;
 
@@ -79,17 +60,13 @@ CREATE TRIGGER trigger_update_piloto_user
 CREATE OR REPLACE FUNCTION insert_escuderia_user()
   RETURNS TRIGGER AS $$
 BEGIN
-  -- Verificar se o login já está em uso
-  IF EXISTS (
-    SELECT 1 FROM USERS WHERE Login = NEW.ConstructorRef || '_c'
-  ) THEN
-    RAISE EXCEPTION 'O login informado já está em uso.';
-  ELSE
-    -- Inserir na tabela USERS
-    INSERT INTO USERS (Login, Password, Tipo, IdOriginal)
-    VALUES (NEW.ConstructorRef || '_c', MD5(NEW.ConstructorRef), 'Escuderia', NEW.ConstructorId);
-    RETURN NEW;
-  END IF;
+  -- Inserir na tabela USERS
+  INSERT INTO USERS (Login, Password, Tipo, IdOriginal)
+  VALUES (NEW.ConstructorRef || '_c', MD5(NEW.ConstructorRef), 'Escuderia', NEW.ConstructorId);
+  RETURN NEW;
+EXCEPTION
+  WHEN unique_violation THEN
+    RAISE EXCEPTION 'O login informado já está em uso.' USING ERRCODE='23505';
 END;
 $$ LANGUAGE plpgsql;
 
@@ -103,19 +80,15 @@ CREATE TRIGGER trigger_insert_escuderia_user
 CREATE OR REPLACE FUNCTION update_escuderia_user()
   RETURNS TRIGGER AS $$
 BEGIN
-  -- Verificar se o novo login já está em uso
-  IF EXISTS (
-    SELECT 1 FROM USERS WHERE Login = NEW.ConstructorRef || '_c' AND IdOriginal <> NEW.ConstructorId
-  ) THEN
-    RAISE EXCEPTION 'O login informado já está em uso.';
-  ELSE
-    -- Atualizar na tabela USERS
-    UPDATE USERS
-    SET Login = NEW.ConstructorRef || '_c',
-        Password = MD5(NEW.ConstructorRef)
-    WHERE IdOriginal = NEW.ConstructorId AND Tipo = 'Escuderia';
-    RETURN NEW;
-  END IF;
+  -- Atualizar na tabela USERS
+  UPDATE USERS
+  SET Login = NEW.ConstructorRef || '_c',
+      Password = MD5(NEW.ConstructorRef)
+  WHERE IdOriginal = NEW.ConstructorId AND Tipo = 'Escuderia';
+  RETURN NEW;
+EXCEPTION
+  WHEN unique_violation THEN
+    RAISE EXCEPTION 'O login informado já está em uso.' USING ERRCODE='23505';
 END;
 $$ LANGUAGE plpgsql;
 
@@ -126,6 +99,7 @@ CREATE TRIGGER trigger_update_escuderia_user
   EXECUTE FUNCTION update_escuderia_user();
 
 -- Criação da tabela para armazenar os logs
+DROP TABLE IF EXISTS LogTable CASCADE;
 CREATE TABLE LogTable (
   userid INTEGER NOT NULL,
   login_date DATE,
@@ -143,9 +117,3 @@ FROM driver;
 INSERT INTO users (login, password, tipo, idoriginal)
 SELECT CONCAT(constructorref, '_c'), MD5(constructorref), 'Escuderia', constructorid
 FROM constructors;
-
-
-
-
-
-
