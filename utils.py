@@ -15,3 +15,5 @@ def limpaInput(text):
     caracteres_banidos = ["'", "%", ";"]
     for caracter in caracteres_banidos:
         text = text.replace(caracter, "")
+    
+    return text
