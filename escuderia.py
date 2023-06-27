@@ -3,8 +3,9 @@ from bd import BANCO_DADOS as bd
 from utils import limpaTela
 
 class Escuderia:
-    def __init__(self, nome, vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano):
+    def __init__(self, id, nome, vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano):
         self.nome = nome
+        self.id = id
         self.vitorias_quantidade = vitorias_quantidade
         self.pilotos_quantidade = pilotos_quantidade
         self.primeiro_ano = primeiro_ano
@@ -46,20 +47,11 @@ class Escuderia:
             opcao = input("      Digite o numero da opção: ")
 
             if opcao == '1':
-                #FAZER SELECT
-                query = f"SELECT * FROM driver WHERE forename = '{forename}'"
-                piloto = bd.select(query)
-                if piloto:
-                    print(piloto)
-                    print("\nEscuderia cadastrada com sucesso. Pressione enter para continuar.")
-                    input()
-                    self.tela_escuderia()
-                    break
-                else:
-                    print("O piloto não correu pela sua Escuderia. Pressione enter para tentar novamente.")
-                    input()
-                    continue
-                
+                bd.consultar_pilotos_por_forename(forename, self.id)
+                print("Pressione enter para continuar.")
+                input()
+                self.tela_escuderia()
+
             elif opcao == '2':
                 continue
             elif opcao == '3':

@@ -41,7 +41,6 @@ class BANCO_DADOS():
                 conn.rollback()
                 return False
 
-
     def insert_driver(driver_ref, number, code, forename, surname, date_of_birth, nationality):
         with conn.cursor() as cursor:
             try:
@@ -81,6 +80,37 @@ class BANCO_DADOS():
                 print("\nErro ao inserir registro na tabela LogTable:", error)
                 return False
 
+    def consultar_pilotos_por_forename(forename, id_escuderia_logada):
+        with conn.cursor() as cursor:
+            try:
+
+                # Consultar pilotos com o mesmo Forename que já correram pela escuderia logada
+                sql = "SELECT DISTINCT Forename, Surname, dob, Nationality FROM Driver " \
+                    "INNER JOIN Results ON Driver.DriverId = Results.DriverId " \
+                    "WHERE Forename = %s AND ConstructorId = %s"
+                values = (forename, id_escuderia_logada)
+
+                #conn.begin()
+
+                cursor.execute(sql, values)
+
+                # Verificar se existem resultados
+                if cursor.rowcount > 0:
+                    print("\nPilotos encontrados:")
+                    for row in cursor:
+                        forename, surname, date_of_birth, nationality = row
+                        print("Nome completo:", forename, surname)
+                        print("Data de Nascimento(AAAA/MM/DD):", date_of_birth)
+                        print("Nacionalidade:", nationality)
+                        print("----------------------")
+                else:
+                    print(
+                        "Nenhum piloto encontrado com esse Forename que tenha corrido pela escuderia logada.")
+
+
+            except (Exception, psycopg2.Error) as error:
+                print("Erro durante a consulta de pilotos:", error)
+                
 # Fechar o cursor e a conexão com o banco de dados
 #cur.close()
 #conn.close()

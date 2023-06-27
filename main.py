@@ -14,14 +14,16 @@ def criar_admin():
     return Admin(pilotos_qnt, escuderia_qnt, corridas_qnt, temporadas_qnt)
 
 def criar_escuderia(username):
-    nome = bd.select(f"SELECT name FROM constructors WHERE constructorref = '{username[:-2]}'")[0][0]
+    escuderia = bd.select(f"SELECT constructorid, name FROM constructors WHERE constructorref = '{username[:-2]}'")[0]
+    id = escuderia[0]
+    nome = escuderia[1]
 
     ##Fazer as queries
     vitorias_quantidade = 1
     pilotos_quantidade = 2
     primeiro_ano = 3
     ultimo_ano = 4
-    return Escuderia(nome, vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano)
+    return Escuderia(id, nome, vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano)
 
 def registrar_login(user_id):
     if(bd.insert_log_table(user_id, 'CURRENT_DATE', 'CURRENT_TIME')):
