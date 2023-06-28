@@ -4,7 +4,7 @@ from admin import Admin
 from escuderia import Escuderia
 from piloto import Piloto
 from bd import BANCO_DADOS as bd
-from utils import limpaTela, limpaInput
+from utils import limpa_tela, limpa_input
 
 def criar_admin():
     pilotos_qnt = bd.select("SELECT COUNT(*) as contagem FROM driver")[0]["contagem"]
@@ -32,8 +32,8 @@ def registrar_login(user_id):
         print('\nHouve um erro registrando seu login!')
 
 def fazer_login(username, password):
-    username = limpaInput(username)
-    password = limpaInput(password)
+    username = limpa_input(username)
+    password = limpa_input(password)
 
     query = f"  SELECT * \
                 FROM users \
@@ -68,12 +68,15 @@ def carregando():
     time.sleep(0.5)
     print(".")
 
+def msg_sair():
+    print(f"\n\tObrigado por utilizar o sistema! Volte sempre!\n\
+    ----------------------- Encerrando ----------------------- \n")
 
 while True:
-    limpaTela()
+    limpa_tela()
     print(f"---------------------- TELA DE LOGIN ---------------------- \n\
                                                                         \n\
-    Digite o usuario e pressione enter, repita para a senha.            \n")
+    Digite o usuario e pressione [ENTER], repita para a senha.            \n")
 
     username = input("Usuário: ")
     password = input("Senha: ")
@@ -83,6 +86,7 @@ while True:
     #carregando()
 
     if fazer_login(username, password):
+        msg_sair()
         break
     else:
         print("\nNome de usuário ou senha incorretos!\n")
@@ -90,4 +94,5 @@ while True:
         print("- Digite 'sair' para encerrar")
         resposta = input()
         if resposta == 'sair':
+            msg_sair()
             break

@@ -2,7 +2,7 @@ from os import system, name
 
 # realiza o 'clear' da tela
 # independente do sistema operacional
-def limpaTela():
+def limpa_tela():
     if name == 'nt':
         # sistemas Windows
         system('cls')
@@ -11,7 +11,7 @@ def limpaTela():
         system('clear')
 
 # remove alguns caracteres especiais do texto
-def limpaInput(text):
+def limpa_input(text):
     caracteres_banidos = ["'", "%", ";"]
     for caracter in caracteres_banidos:
         text = text.replace(caracter, "")

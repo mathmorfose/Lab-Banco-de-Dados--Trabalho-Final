@@ -1,6 +1,6 @@
 import os
 from bd import BANCO_DADOS as bd
-from utils import limpaTela
+from utils import limpa_tela, limpa_input
 
 class Admin:
     def __init__(self, pilotos_quantidade, escuderias_quantidade, corridas_quantidade, temporadas_quantidade):
@@ -10,34 +10,35 @@ class Admin:
         self.temporadas_quantidade = temporadas_quantidade
     
     def tela_admin(self):
-        limpaTela()
-        print(f"Você está logado como: Administrador                  \n\n \
-    Quantidade de pilotos cadastrados: {self.pilotos_quantidade}      \n \
-    Quantidade de escuderias cadastradas: {self.escuderias_quantidade}\n \
-    Quantidade de corridas cadastradas: {self.corridas_quantidade}    \n \
-    Quantidade de temporadas cadastradas: {self.temporadas_quantidade}\n\n \
-        Escolha uma opção:                                            \n\n \
-            1- Cadastrar Escuderia.                                   \n\n \
-            2- Cadastrar Pilotos.                                     \n\n \
-            3- Visualizar relatórios.                                 \n\n \
-        ")
-        opcao = input("         Digite o numero da opção: ")
+        while True:
+            limpa_tela()
+            print(f"Você está logado como: Administrador                  \n\n \
+        Quantidade de pilotos cadastrados: {self.pilotos_quantidade}      \n \
+        Quantidade de escuderias cadastradas: {self.escuderias_quantidade}\n \
+        Quantidade de corridas cadastradas: {self.corridas_quantidade}    \n \
+        Quantidade de temporadas cadastradas: {self.temporadas_quantidade}\n\n \
+            Escolha uma opção:                                            \n\n \
+                1- Cadastrar Escuderia.                                   \n\n \
+                2- Cadastrar Pilotos.                                     \n\n \
+                3- Visualizar relatórios.                                 \n\n \
+                0- Sair                                                   \n\n \
+            ")
+            opcao = input("         Digite o numero da opção: ")
 
-        if opcao == '1':
-            self.cadastrar_escuderia()
-        elif opcao == '2':
-            self.cadastrar_piloto()
-        elif opcao == '3':
-            self.tela_relatorios()
-
-        else:
-            print("opção inválida")
+            if opcao == '1':
+                self.cadastrar_escuderia()
+            elif opcao == '2':
+                self.cadastrar_piloto()
+            elif opcao == '3':
+                self.tela_relatorios()
+            elif opcao == '0':
+                break
 
     def cadastrar_escuderia(self):
         while True:
-            limpaTela()
-            print(f"Cadastro de Escuderia                                   \n\n \
-   Digite o valor de cada dado e pressione enter                            \n")
+            limpa_tela()
+            print(f"---------------- Cadastro de Escuderia ---------------- \n\n \
+   Digite o valor de cada dado e pressione [ENTER]                            \n")
 
             constructor_ref = input("   ConstructorRef: ")
             name = input("   Name: ")
@@ -52,29 +53,29 @@ class Admin:
 
             if opcao == '1':
                 if bd.insert_construct(constructor_ref, name, nationality, url):
-                    print("\nEscuderia cadastrada com sucesso. Pressione enter para continuar.")
+                    print("\nEscuderia cadastrada com sucesso. Pressione [ENTER] para continuar.")
                     input()
                     self.escuderias_quantidade += 1
-                    self.tela_admin()
                     break
                 else:
-                    print("Pressione enter para tentar novamente.")
+                    print("Pressione [ENTER] para tentar novamente.")
                     input()
                     continue
                 
             elif opcao == '2':
                 continue
             elif opcao == '3':
-                self.tela_admin()
-
+                break
             else:
-                print("Opção inválida. Pressione enter para tentar novamente.")
+                print("\nOpção inválida! Reiniciando cadastro")
+                print("Pressione [ENTER] para continuar")
+                input()
 
     def cadastrar_piloto(self):
         while True:
-            limpaTela()
-            print(f"Cadastro de Piloto                                      \n\n \
-   Digite o valor de cada dado e pressione enter                            \n")
+            limpa_tela()
+            print(f"----------------- Cadastro de Piloto -----------------  \n\n \
+   Digite o valor de cada dado e pressione [ENTER]                            \n")
 
             driver_ref = input("   Driverref: ")
             number = input("   Number: ")
@@ -92,25 +93,25 @@ class Admin:
 
             if opcao == '1':
                 if bd.insert_driver(driver_ref, number, code, forename, surname, birth_date, nationality):
-                    print("\nPiloto cadastrado com sucesso. Pressione enter para continuar.")
+                    print("\nPiloto cadastrado com sucesso. Pressione [ENTER] para continuar.")
                     input()
                     self.pilotos_quantidade += 1
-                    self.tela_admin()
                     break
                 else:
-                    print("Pressione enter para tentar novamente.")
+                    print("Pressione [ENTER] para tentar novamente.")
                     input()
                     continue
             elif opcao == '2':
                 continue
             elif opcao == '3':
-                self.tela_admin()
-
+                break
             else:
-                print("Opção inválida. Pressione enter para tentar novamente.")
+                print("\nOpção inválida! Reiniciando cadastro")
+                print("Pressione [ENTER] para continuar")
+                input()
 
     def tela_contagem_resultados_status(self):
-        limpaTela()
+        limpa_tela()
         todos_status = bd.get_contagem_resultados_status()
         print(f"Contagem de Resultados por Status em ordem decrescente\n")
         print("{:^18} | {:^12}".format("STATUS", "CONTAGEM"))
@@ -122,7 +123,7 @@ class Admin:
 
     def tela_relatorios(self):
         while True:
-            limpaTela()
+            limpa_tela()
             print(f"Gerar relatórios                                   \n\n \
    Escolha o tipo de relatório e pressione enter.                           \n")
 

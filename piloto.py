@@ -1,5 +1,5 @@
 from bd import BANCO_DADOS as bd
-from utils import limpaTela
+from utils import limpa_tela
 
 class Piloto:
     def __init__(self, id, nome, vitorias_quantidade, primeiro_ano, ultimo_ano):
@@ -10,7 +10,7 @@ class Piloto:
         self.ultimo_ano = ultimo_ano
 
     def tela_piloto(self):
-        limpaTela()
+        limpa_tela()
         print(f"Você está logado como: {self.nome}                      \n\n \
     Quantidade de vitórias: {self.vitorias_quantidade}                  \n \
     Primeiro ano que há dados: {self.primeiro_ano}                      \n \
