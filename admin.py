@@ -115,7 +115,7 @@ class Admin:
         print(f"Contagem de Resultados por Status em ordem decrescente\n")
         print("{:^18} | {:^12}".format("STATUS", "CONTAGEM"))
         for status in todos_status:
-            print("{:^18} | {:^12}".format(status[0], status[1]))
+            print("{:^18} | {:^12}".format(status['status'], status['quantidade_resultados']))
 
         print("Pressione [ENTER] para continuar.")
         input()
@@ -128,7 +128,7 @@ class Admin:
 
             print(f"            1- Contagem de Resultados por Status.                   \n\n \
             2- Aeroportos Próximos a uma Cidade por Nome.                   \n\n \
-            3- Cancelar cadastro e voltar para tela de Overview.            \n\n")
+            3- Voltar para tela de Overview.            \n\n")
 
             opcao = input("      Digite o numero da opção: ")
 

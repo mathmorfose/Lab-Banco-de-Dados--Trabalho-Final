@@ -7,27 +7,25 @@ from bd import BANCO_DADOS as bd
 from utils import limpaTela, limpaInput
 
 def criar_admin():
-    pilotos_qnt = bd.select("SELECT COUNT(*) FROM driver")[0][0]
-    escuderia_qnt = bd.select("SELECT COUNT(*) FROM constructors")[0][0]
-    corridas_qnt = bd.select("SELECT COUNT(*) FROM races")[0][0]
-    temporadas_qnt = bd.select("SELECT COUNT(*) FROM seasons")[0][0]
+    pilotos_qnt = bd.select("SELECT COUNT(*) as contagem FROM driver")[0]["contagem"]
+    escuderia_qnt = bd.select("SELECT COUNT(*) as contagem FROM constructors")[0]["contagem"]
+    corridas_qnt = bd.select("SELECT COUNT(*) as contagem FROM races")[0]["contagem"]
+    temporadas_qnt = bd.select("SELECT COUNT(*) as contagem FROM seasons")[0]["contagem"]
     return Admin(pilotos_qnt, escuderia_qnt, corridas_qnt, temporadas_qnt)
 
 def criar_escuderia(username):
     escuderia = bd.select(f"SELECT constructorid, name FROM constructors WHERE constructorref = '{username[:-2]}'")[0]
-    id = escuderia[0]
-    nome = escuderia[1]
 
-    vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano = bd.overview_escuderia(id)
-    return Escuderia(id, nome, vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano)
+    vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano = bd.overview_escuderia(escuderia["constructorid"])
+
+    return Escuderia(escuderia["constructorid"], escuderia["name"], vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano)
 
 def criar_piloto(username):
     piloto = bd.select(f"SELECT driverid, forename || ' ' || surname as nome_completo FROM driver WHERE driverref = '{username[:-2]}'")[0]
-    id = piloto[0]
-    nome = piloto[1]
 
-    vitorias_quantidade, primeiro_ano, ultimo_ano = bd.overview_piloto(id)
-    return Piloto(id, nome, vitorias_quantidade, primeiro_ano, ultimo_ano)
+    vitorias_quantidade, primeiro_ano, ultimo_ano = bd.overview_piloto(piloto["driverid"])
+
+    return Piloto(piloto["driverid"], piloto["nome_completo"], vitorias_quantidade, primeiro_ano, ultimo_ano)
 
 def registrar_login(user_id):
     if(bd.insert_log_table(user_id, 'CURRENT_DATE', 'CURRENT_TIME')):
@@ -42,28 +40,26 @@ def fazer_login(username, password):
     user = bd.select(query)
 
     if user:
-        # Trocar recebimento do bd como dicionario para ficar mais intuitivo, isso implica em alterar como esta outras chamadas ao bd tambem
-        #user['Tipo'] = Escuderia
-        tipo = user[0][3]
-        if tipo == 'Administrador':
+        user = user[0]
+        if user['tipo'] == 'Administrador':
             admin = criar_admin()
+            registrar_login(user['userid'])
             admin.tela_admin()
             return True
-        elif tipo == "Escuderia":
+        elif user['tipo'] == "Escuderia":
             escuderia = criar_escuderia(username)
-            registrar_login(user[0][0])
+            registrar_login(user['userid'])
             escuderia.tela_escuderia()
             return True
         else:
             piloto = criar_piloto(username)
+            registrar_login(user['userid'])
+            input()
             piloto.tela_piloto()
-            #registrar_login(username)
-            print("piloto criado")
             return True
     
     return False
-
-        
+      
 def carregando():
     for _ in range(3):
         sys.stdout.flush()

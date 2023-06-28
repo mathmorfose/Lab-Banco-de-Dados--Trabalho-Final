@@ -1,4 +1,5 @@
 import psycopg2
+import psycopg2.extras
 import credenciais as cd
 # Conectar ao banco de dados
 
@@ -17,7 +18,7 @@ conn = psycopg2.connect(
 class BANCO_DADOS():
 
     def select(query):
-        with conn.cursor() as cursor:
+        with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
                 cursor.execute(query)
             except (Exception, psycopg2.Error) as error:
@@ -123,7 +124,7 @@ class BANCO_DADOS():
 
                 cursor.callproc("get_primeiro_ultimo_ano", (escuderia_id,))
                 primeiro_ano, ultimo_ano = cursor.fetchone()
-
+                
                 return quantidade_vitorias, total_pilotos, primeiro_ano, ultimo_ano
             except (Exception, psycopg2.Error) as error:
                 print("Erro ao executar a função:", error)
@@ -141,7 +142,7 @@ class BANCO_DADOS():
                 print("Erro:", error)
 
     def get_contagem_resultados_status():
-        with conn.cursor() as cursor:
+        with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
                 sql =   "SELECT s.status, COUNT(r.statusid) AS quantidade_resultados \
                         FROM status s \
