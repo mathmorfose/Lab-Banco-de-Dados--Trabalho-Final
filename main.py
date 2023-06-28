@@ -2,6 +2,7 @@ import time
 import sys
 from admin import Admin
 from escuderia import Escuderia
+from piloto import Piloto
 from bd import BANCO_DADOS as bd
 from utils import limpaTela, limpaInput
 
@@ -17,9 +18,16 @@ def criar_escuderia(username):
     id = escuderia[0]
     nome = escuderia[1]
 
-    ##Fazer as queries
-    vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano = bd.overViewEscuderia(id)
+    vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano = bd.overview_escuderia(id)
     return Escuderia(id, nome, vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano)
+
+def criar_piloto(username):
+    piloto = bd.select(f"SELECT driverid, forename || ' ' || surname as nome_completo FROM driver WHERE driverref = '{username[:-2]}'")[0]
+    id = piloto[0]
+    nome = piloto[1]
+
+    vitorias_quantidade, primeiro_ano, ultimo_ano = bd.overview_piloto(id)
+    return Piloto(id, nome, vitorias_quantidade, primeiro_ano, ultimo_ano)
 
 def registrar_login(user_id):
     if(bd.insert_log_table(user_id, 'CURRENT_DATE', 'CURRENT_TIME')):
@@ -47,8 +55,8 @@ def fazer_login(username, password):
             escuderia.tela_escuderia()
             return True
         else:
-            #piloto = criar_piloto(username)
-            #piloto.tela_piloto()
+            piloto = criar_piloto(username)
+            piloto.tela_piloto()
             #registrar_login(username)
             print("piloto criado")
             return True

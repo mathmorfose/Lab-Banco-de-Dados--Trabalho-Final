@@ -111,7 +111,7 @@ class BANCO_DADOS():
             except (Exception, psycopg2.Error) as error:
                 print("Erro durante a consulta de pilotos:", error)
     
-    def overViewEscuderia(escuderia_id):
+    def overview_escuderia(escuderia_id):
         with conn.cursor() as cursor:
             try:
                 # Nome da função e parâmetro
@@ -128,6 +128,17 @@ class BANCO_DADOS():
             except (Exception, psycopg2.Error) as error:
                 print("Erro ao executar a função:", error)
 
+    def overview_piloto(piloto_id):
+        with conn.cursor() as cursor:
+            try:
+                cursor.callproc("get_quantidade_vitorias_piloto", (piloto_id,))
+                resultado = cursor.fetchone()[0]
+
+                cursor.callproc("get_primeiro_ultimo_ano_piloto", (piloto_id,))
+                primeiro_ano, ultimo_ano = cursor.fetchone()
+                return resultado, primeiro_ano, ultimo_ano
+            except (Exception, psycopg2.Error) as error:
+                print("Erro:", error)
 
 # Fechar o cursor e a conexão com o banco de dados
 #cur.close()
