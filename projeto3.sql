@@ -130,3 +130,45 @@ ALTER TABLE driver ALTER COLUMN DriverId SET DEFAULT nextval('my_serial');
 DROP SEQUENCE IF EXISTS my_serial2 CASCADE;
 CREATE SEQUENCE my_serial2 AS integer START 216 OWNED BY CONSTRUCTORS.ConstructorId;
 ALTER TABLE constructors ALTER COLUMN ConstructorId SET DEFAULT nextval('my_serial2');
+
+-- Overview Escuderia
+-- Função para obter a quantidade de vitórias da escuderia
+CREATE OR REPLACE FUNCTION get_escuderia_vitorias(escuderia_id NUMERIC)
+  RETURNS INTEGER AS $$
+DECLARE
+  total_vitorias INTEGER;
+BEGIN
+  SELECT COUNT(*) INTO total_vitorias
+  FROM RESULTS
+  WHERE ConstructorId = escuderia_id AND position = 1;
+
+  RETURN total_vitorias;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Função para obter a quantidade de pilotos diferentes que já correram pela escuderia
+CREATE OR REPLACE FUNCTION get_quantidade_pilotos(escuderia_id NUMERIC)
+  RETURNS INTEGER AS $$
+DECLARE
+  total_pilotos INTEGER;
+BEGIN
+  SELECT COUNT(DISTINCT DriverId) INTO total_pilotos
+  FROM RESULTS
+  WHERE ConstructorId = escuderia_id;
+
+  RETURN total_pilotos;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Função para obter o primeiro e último ano de dados da escuderia
+CREATE OR REPLACE FUNCTION get_primeiro_ultimo_ano(escuderia_id NUMERIC, OUT primeiro_ano INTEGER, OUT ultimo_ano INTEGER)
+  RETURNS RECORD AS $$
+BEGIN
+  SELECT MIN(R.Year), MAX(R.Year) INTO primeiro_ano, ultimo_ano
+  FROM Results RS
+  JOIN Races R ON RS.RaceId = R.RaceId
+  WHERE RS.ConstructorId = escuderia_id;
+
+  RETURN;
+END;
+$$ LANGUAGE plpgsql;

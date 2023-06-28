@@ -1,6 +1,5 @@
 import time
 import sys
-import os
 from admin import Admin
 from escuderia import Escuderia
 from bd import BANCO_DADOS as bd
@@ -19,10 +18,7 @@ def criar_escuderia(username):
     nome = escuderia[1]
 
     ##Fazer as queries
-    vitorias_quantidade = 1
-    pilotos_quantidade = 2
-    primeiro_ano = 3
-    ultimo_ano = 4
+    vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano = bd.overViewEscuderia(id)
     return Escuderia(id, nome, vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano)
 
 def registrar_login(user_id):
