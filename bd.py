@@ -37,9 +37,10 @@ class BANCO_DADOS():
         with conn:
             with conn.cursor() as cursor:
                 try:
-                    sql = "INSERT INTO Constructors (ConstructorRef, Name, Nationality, URL) VALUES (%s, %s, %s, %s)"
+                    sql = "INSERT INTO Constructors (ConstructorRef, Name, Nationality, URL) VALUES ('{}','{}','{}','{}')"
                     values = (constructor_ref, name, nationality, url)
-                    cursor.execute(sql, values)
+                    
+                    cursor.execute(sql.format(*values))
                     result = True
                 except (Exception, psycopg2.Error) as error:
                     print("\nErro ao inserir registro na tabela Construct:", error)
@@ -54,11 +55,11 @@ class BANCO_DADOS():
         with conn:
             with conn.cursor() as cursor:
                 try:
-                    sql = "INSERT INTO Driver (driverRef, number, code, forename, surname, dob, nationality) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                    sql = "INSERT INTO Driver (driverRef, number, code, forename, surname, dob, nationality) VALUES ('{}',{},'{}','{}','{}','{}','{}')"
                     values = (driver_ref, number, code, forename,
                             surname, date_of_birth, nationality)
                     
-                    cursor.execute(sql, values)
+                    cursor.execute(sql.format(*values))
                     result = True
                 except (Exception, psycopg2.Error) as error:
                     print("\nErro ao inserir registro na tabela Driver:", error)

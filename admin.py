@@ -52,6 +52,10 @@ class Admin:
             opcao = input("      Digite o numero da opção: ")
 
             if opcao == '1':
+                constructor_ref = limpa_input(constructor_ref)
+                name = limpa_input(name)
+                nationality = limpa_input(nationality)
+                url = limpa_input(url)
                 if bd.insert_construct(constructor_ref, name, nationality, url):
                     print("\nEscuderia cadastrada com sucesso. Pressione [ENTER] para continuar.")
                     input()
@@ -92,6 +96,13 @@ class Admin:
             opcao = input("      Digite o numero da opção: ")
 
             if opcao == '1':
+                driver_ref = limpa_input(driver_ref)
+                number = limpa_input(number)
+                code = limpa_input(code)
+                forename = limpa_input(forename)
+                surname = limpa_input(surname)
+                birth_date = limpa_input(birth_date)
+                nationality = limpa_input(nationality)
                 if bd.insert_driver(driver_ref, number, code, forename, surname, birth_date, nationality):
                     print("\nPiloto cadastrado com sucesso. Pressione [ENTER] para continuar.")
                     input()
