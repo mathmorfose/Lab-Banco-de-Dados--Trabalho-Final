@@ -28,37 +28,36 @@ def criar_piloto(username):
     return Piloto(piloto["driverid"], piloto["nome_completo"], vitorias_quantidade, primeiro_ano, ultimo_ano)
 
 def registrar_login(user_id):
-    if(bd.insert_log_table(user_id, 'CURRENT_DATE', 'CURRENT_TIME')):
-        print("login registrado")
-    else:
-        print("registrou n")
+    if not bd.insert_log_table(user_id):
+        print('\nHouve um erro registrando seu login!')
 
 def fazer_login(username, password):
+    username = limpaInput(username)
+    password = limpaInput(password)
+
     query = f"  SELECT * \
                 FROM users \
                 WHERE login = '{username}' and password = MD5('{password}')"
     user = bd.select(query)
 
-    if user:
-        user = user[0]
-        if user['tipo'] == 'Administrador':
-            admin = criar_admin()
-            registrar_login(user['userid'])
-            admin.tela_admin()
-            return True
-        elif user['tipo'] == "Escuderia":
-            escuderia = criar_escuderia(username)
-            registrar_login(user['userid'])
-            escuderia.tela_escuderia()
-            return True
-        else:
-            piloto = criar_piloto(username)
-            registrar_login(user['userid'])
-            input()
-            piloto.tela_piloto()
-            return True
-    
-    return False
+    if not user:
+        return False
+
+    user = user[0]
+    if user['tipo'] == 'Administrador':
+        admin = criar_admin()
+        registrar_login(user['userid'])
+        admin.tela_admin()
+    elif user['tipo'] == "Escuderia":
+        escuderia = criar_escuderia(username)
+        registrar_login(user['userid'])
+        escuderia.tela_escuderia()
+    else:
+        piloto = criar_piloto(username)
+        registrar_login(user['userid'])
+        piloto.tela_piloto()
+
+    return True
       
 def carregando():
     for _ in range(3):
@@ -76,8 +75,8 @@ while True:
                                                                         \n\
     Digite o usuario e pressione enter, repita para a senha.            \n")
 
-    username = limpaInput(input("Usuário: "))
-    password = limpaInput(input("Senha: "))
+    username = input("Usuário: ")
+    password = input("Senha: ")
 
     print("\n                       Autenticando", end="")
 
