@@ -140,6 +140,21 @@ class BANCO_DADOS():
             except (Exception, psycopg2.Error) as error:
                 print("Erro:", error)
 
+    def get_contagem_resultados_status():
+        with conn.cursor() as cursor:
+            try:
+                sql =   "SELECT s.status, COUNT(r.statusid) AS quantidade_resultados \
+                        FROM status s \
+                        JOIN results r ON s.statusid = r.statusid \
+                        GROUP BY s.status \
+                        ORDER BY quantidade_resultados DESC;"
+
+                cursor.execute(sql)
+
+                return cursor.fetchall()
+            
+            except (Exception, psycopg2.Error) as error:
+                print("Erro durante a consulta de pilotos:", error)
+
 # Fechar o cursor e a conexão com o banco de dados
-#cur.close()
 #conn.close()

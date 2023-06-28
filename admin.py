@@ -19,6 +19,7 @@ class Admin:
         Escolha uma opção:                                            \n\n \
             1- Cadastrar Escuderia.                                   \n\n \
             2- Cadastrar Pilotos.                                     \n\n \
+            3- Visualizar relatórios.                                 \n\n \
         ")
         opcao = input("         Digite o numero da opção: ")
 
@@ -26,6 +27,8 @@ class Admin:
             self.cadastrar_escuderia()
         elif opcao == '2':
             self.cadastrar_piloto()
+        elif opcao == '3':
+            self.tela_relatorios()
 
         else:
             print("opção inválida")
@@ -67,7 +70,6 @@ class Admin:
             else:
                 print("Opção inválida. Pressione enter para tentar novamente.")
 
-    
     def cadastrar_piloto(self):
         while True:
             limpaTela()
@@ -106,4 +108,37 @@ class Admin:
 
             else:
                 print("Opção inválida. Pressione enter para tentar novamente.")
-        
+
+    def tela_contagem_resultados_status(self):
+        limpaTela()
+        todos_status = bd.get_contagem_resultados_status()
+        print(f"Contagem de Resultados por Status em ordem decrescente\n")
+        print("{:^18} | {:^12}".format("STATUS", "CONTAGEM"))
+        for status in todos_status:
+            print("{:^18} | {:^12}".format(status[0], status[1]))
+
+        print("Pressione [ENTER] para continuar.")
+        input()
+
+    def tela_relatorios(self):
+        while True:
+            limpaTela()
+            print(f"Gerar relatórios                                   \n\n \
+   Escolha o tipo de relatório e pressione enter.                           \n")
+
+            print(f"            1- Contagem de Resultados por Status.                   \n\n \
+            2- Aeroportos Próximos a uma Cidade por Nome.                   \n\n \
+            3- Cancelar cadastro e voltar para tela de Overview.            \n\n")
+
+            opcao = input("      Digite o numero da opção: ")
+
+            if opcao == '1':
+                self.tela_contagem_resultados_status()
+                
+            elif opcao == '2':
+                continue
+            elif opcao == '3':
+                self.tela_admin()
+
+            else:
+                print("Opção inválida. Pressione enter para tentar novamente.")
