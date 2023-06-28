@@ -162,19 +162,6 @@ $$ LANGUAGE plpgsql;
 
 -- Overview Piloto
 -- Função para obter o primeiro e último ano de dados da escuderia
-CREATE OR REPLACE FUNCTION get_primeiro_ultimo_ano(escuderia_id NUMERIC, OUT primeiro_ano INTEGER, OUT ultimo_ano INTEGER)
-  RETURNS RECORD AS $$
-BEGIN
-  SELECT MIN(R.Year), MAX(R.Year) INTO primeiro_ano, ultimo_ano
-  FROM Results RS
-  JOIN Races R ON RS.RaceId = R.RaceId
-  WHERE RS.ConstructorId = escuderia_id;
-
-  RETURN;
-END;
-$$ LANGUAGE plpgsql;
-
-
 CREATE OR REPLACE FUNCTION get_quantidade_vitorias_piloto(piloto_id NUMERIC)
   RETURNS INTEGER AS $$
 DECLARE
