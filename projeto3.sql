@@ -56,6 +56,23 @@ CREATE TRIGGER trigger_update_piloto_user
   FOR EACH ROW
   EXECUTE FUNCTION update_piloto_user();
 
+-- Gatilho para remoção de pilotos na tabela USERS
+CREATE OR REPLACE FUNCTION delete_piloto_user()
+  RETURNS TRIGGER AS $$
+BEGIN
+  -- Remover da tabela USERS
+  DELETE FROM USERS
+  WHERE IdOriginal = OLD.DriverId AND Tipo = 'Piloto';
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trigger_delete_piloto_user ON DRIVER;
+CREATE TRIGGER trigger_delete_piloto_user
+  AFTER DELETE ON DRIVER
+  FOR EACH ROW
+  EXECUTE FUNCTION delete_piloto_user();
+
 -- Gatilho para inserção de escuderias na tabela USERS
 CREATE OR REPLACE FUNCTION insert_escuderia_user()
   RETURNS TRIGGER AS $$
@@ -97,6 +114,23 @@ CREATE TRIGGER trigger_update_escuderia_user
   AFTER UPDATE ON CONSTRUCTORS
   FOR EACH ROW
   EXECUTE FUNCTION update_escuderia_user();
+
+-- Gatilho para remoção de escuderias na tabela USERS
+CREATE OR REPLACE FUNCTION delete_escuderia_user()
+  RETURNS TRIGGER AS $$
+BEGIN
+  -- Remover da tabela USERS
+  DELETE FROM USERS
+  WHERE IdOriginal = OLD.ConstructorId AND Tipo = 'Escuderia';
+  RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trigger_delete_escuderia_user ON CONSTRUCTORS;
+CREATE TRIGGER trigger_delete_escuderia_user
+  AFTER DELETE ON CONSTRUCTORS
+  FOR EACH ROW
+  EXECUTE FUNCTION delete_escuderia_user();
 
 -- Criação da tabela para armazenar os logs
 DROP TABLE IF EXISTS LogTable CASCADE;
