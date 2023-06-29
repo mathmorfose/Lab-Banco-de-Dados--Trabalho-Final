@@ -78,8 +78,12 @@ class BANCO_DADOS():
         with conn:
             with conn.cursor() as cursor:
                 try:
-                    sql = f"INSERT INTO LogTable (userid, login_date, login_time) VALUES ('{user}', CURRENT_DATE, CURRENT_TIME)"
-                    cursor.execute(sql)
+                    sql = "INSERT INTO LogTable (userid, login_date, login_time) VALUES ({}, CURRENT_DATE, CURRENT_TIME)"
+                    values = (user,)
+                    
+                    cursor.execute(
+                        formatar_query(sql, values)
+                    )
                     result = True
                 except (Exception, psycopg2.Error) as error:
                     print("\nErro ao inserir registro na tabela LogTable:", error)

@@ -4,7 +4,7 @@ from admin import Admin
 from escuderia import Escuderia
 from piloto import Piloto
 from bd import BANCO_DADOS as bd
-from utils import limpa_tela, limpa_inputs
+from utils import limpa_tela, formatar_query
 
 def criar_admin():
     pilotos_qnt = bd.select("SELECT COUNT(*) as contagem FROM driver")[0]["contagem"]
@@ -32,12 +32,12 @@ def registrar_login(user_id):
         print('\nHouve um erro registrando seu login!')
 
 def fazer_login(username, password):
-    username, password = limpa_inputs(username, password)
+    values = (username, password)
 
-    query = f"  SELECT * \
+    sql = "  SELECT * \
                 FROM users \
-                WHERE login = '{username}' and password = MD5('{password}')"
-    user = bd.select(query)
+                WHERE login = {} and password = MD5({})"
+    user = bd.select(formatar_query(sql, values))
 
     if not user:
         return False
