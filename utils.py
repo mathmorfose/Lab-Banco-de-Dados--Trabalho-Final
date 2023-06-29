@@ -23,3 +23,14 @@ def limpa_inputs(*valores):
         return valores_filtrados[0]
 
     return valores_filtrados
+
+# formata a query SQL com os valores passados
+def formatar_query(sql, valores):
+    valores_formatados = []
+    for valor in valores:
+        if len(valor) <= 0:
+            valores_formatados.append("null")
+        else:
+            valores_formatados.append("'{}'".format(valor))
+    
+    return sql.format(*valores_formatados)
