@@ -13,19 +13,29 @@ def criar_admin():
     temporadas_qnt = bd.select("SELECT COUNT(*) as contagem FROM seasons")[0]["contagem"]
     return Admin(pilotos_qnt, escuderia_qnt, corridas_qnt, temporadas_qnt)
 
-def criar_escuderia(username):
-    escuderia = bd.select(f"SELECT constructorid, name FROM constructors WHERE constructorref = '{username[:-2]}'")[0]
+def criar_escuderia(constructorid):
+    sql = "SELECT name FROM constructors WHERE constructorid = {}"
+    values = (constructorid, )
+    rows = bd.select(
+        formatar_query(sql, values)
+    )
+    nome_escuderia = rows[0]["name"]
 
-    vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano = bd.overview_escuderia(escuderia["constructorid"])
+    vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano = bd.overview_escuderia(constructorid)
 
-    return Escuderia(escuderia["constructorid"], escuderia["name"], vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano)
+    return Escuderia(constructorid, nome_escuderia, vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano)
 
-def criar_piloto(username):
-    piloto = bd.select(f"SELECT driverid, forename || ' ' || surname as nome_completo FROM driver WHERE driverref = '{username[:-2]}'")[0]
+def criar_piloto(driverid):
+    sql = "SELECT forename || ' ' || surname as nome_completo FROM driver WHERE driverid = {}"
+    values = (driverid, )
+    rows = bd.select(
+        formatar_query(sql, values)
+    )
+    nome_piloto = rows[0]["nome_completo"]
 
-    vitorias_quantidade, primeiro_ano, ultimo_ano = bd.overview_piloto(piloto["driverid"])
+    vitorias_quantidade, primeiro_ano, ultimo_ano = bd.overview_piloto(driverid)
 
-    return Piloto(piloto["driverid"], piloto["nome_completo"], vitorias_quantidade, primeiro_ano, ultimo_ano)
+    return Piloto(driverid, nome_piloto, vitorias_quantidade, primeiro_ano, ultimo_ano)
 
 def registrar_login(user_id):
     if not bd.insert_log_table(user_id):
@@ -48,11 +58,11 @@ def fazer_login(username, password):
         registrar_login(user['userid'])
         admin.tela_admin()
     elif user['tipo'] == "Escuderia":
-        escuderia = criar_escuderia(username)
+        escuderia = criar_escuderia(int(user['idoriginal']))
         registrar_login(user['userid'])
         escuderia.tela_escuderia()
     else:
-        piloto = criar_piloto(username)
+        piloto = criar_piloto(int(user['idoriginal']))
         registrar_login(user['userid'])
         piloto.tela_piloto()
 
