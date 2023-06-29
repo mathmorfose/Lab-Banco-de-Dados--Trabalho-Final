@@ -126,7 +126,7 @@ class BANCO_DADOS():
                     cursor.callproc("get_quantidade_pilotos", (escuderia_id,))
                     total_pilotos = cursor.fetchone()[0]
 
-                    cursor.callproc("get_primeiro_ultimo_ano", (escuderia_id,))
+                    cursor.callproc("get_primeiro_ultimo_ano_escuderia", (escuderia_id,))
                     primeiro_ano, ultimo_ano = cursor.fetchone()
                     
                     result = (quantidade_vitorias, total_pilotos, primeiro_ano, ultimo_ano)
