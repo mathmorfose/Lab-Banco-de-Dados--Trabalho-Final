@@ -1,6 +1,6 @@
 import os
 from bd import BANCO_DADOS as bd
-from utils import limpa_tela, limpa_input
+from utils import limpa_tela, limpa_inputs
 
 class Admin:
     def __init__(self, pilotos_quantidade, escuderias_quantidade, corridas_quantidade, temporadas_quantidade):
@@ -52,10 +52,10 @@ class Admin:
             opcao = input("      Digite o numero da opção: ")
 
             if opcao == '1':
-                constructor_ref = limpa_input(constructor_ref)
-                name = limpa_input(name)
-                nationality = limpa_input(nationality)
-                url = limpa_input(url)
+                constructor_ref, name, nationality, url = limpa_inputs(
+                    constructor_ref, name, nationality, url
+                )
+
                 if bd.insert_construct(constructor_ref, name, nationality, url):
                     print("\nEscuderia cadastrada com sucesso. Pressione [ENTER] para continuar.")
                     input()
@@ -96,13 +96,9 @@ class Admin:
             opcao = input("      Digite o numero da opção: ")
 
             if opcao == '1':
-                driver_ref = limpa_input(driver_ref)
-                number = limpa_input(number)
-                code = limpa_input(code)
-                forename = limpa_input(forename)
-                surname = limpa_input(surname)
-                birth_date = limpa_input(birth_date)
-                nationality = limpa_input(nationality)
+                driver_ref, number, code, forename, surname, birth_date, nationality = limpa_inputs(
+                    driver_ref, number, code, forename, surname, birth_date, nationality
+                )
                 if bd.insert_driver(driver_ref, number, code, forename, surname, birth_date, nationality):
                     print("\nPiloto cadastrado com sucesso. Pressione [ENTER] para continuar.")
                     input()
@@ -138,8 +134,8 @@ class Admin:
             print(f"Gerar relatórios                                   \n\n \
    Escolha o tipo de relatório e pressione enter.                           \n")
 
-            print(f"            1- Contagem de Resultados por Status.                   \n\n \
-            2- Aeroportos Próximos a uma Cidade por Nome.                   \n\n \
+            print(f"            1- Contagem de Resultados por Status.                   \n\n\
+            2- Aeroportos Próximos a uma Cidade por Nome.                   \n\n\
             3- Voltar para tela de Overview.            \n\n")
 
             opcao = input("      Digite o numero da opção: ")

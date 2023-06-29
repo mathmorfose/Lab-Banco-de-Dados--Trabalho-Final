@@ -11,9 +11,15 @@ def limpa_tela():
         system('clear')
 
 # remove alguns caracteres especiais do texto
-def limpa_input(text):
+def limpa_inputs(*valores):
     caracteres_banidos = ["'", "%", ";"]
-    for caracter in caracteres_banidos:
-        text = text.replace(caracter, "")
+    valores_filtrados = ()
+    for valor in valores:
+        for caracter in caracteres_banidos:
+            valor = valor.replace(caracter, "")
+        valores_filtrados += (valor, )
     
-    return text
+    if len(valores_filtrados) == 1:
+        return valores_filtrados[0]
+
+    return valores_filtrados
