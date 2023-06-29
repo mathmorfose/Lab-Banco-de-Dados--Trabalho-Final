@@ -13,22 +13,22 @@ def limpa_tela():
 # remove alguns caracteres especiais do texto
 def limpa_inputs(*valores):
     caracteres_banidos = ["'", "%", ";"]
-    valores_filtrados = ()
+    valores_filtrados = []
     for valor in valores:
         if type(valor) is str:
             for caracter in caracteres_banidos:
                 valor = valor.replace(caracter, "")
-        valores_filtrados += (valor, )
+        valores_filtrados.append(valor)
     
     if len(valores_filtrados) == 1:
         return valores_filtrados[0]
 
-    return valores_filtrados
+    return tuple(valores_filtrados)
 
 # formata a query SQL com os valores passados
 def formatar_query(sql, valores):
     if len(valores) == 1:
-        valores = (limpa_inputs(valores), )
+        valores = (limpa_inputs(*valores), )
     else:
         valores = limpa_inputs(*valores)
 
