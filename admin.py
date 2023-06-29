@@ -52,10 +52,6 @@ class Admin:
             opcao = input("      Digite o numero da opção: ")
 
             if opcao == '1':
-                constructor_ref, name, nationality, url = limpa_inputs(
-                    constructor_ref, name, nationality, url
-                )
-
                 if bd.insert_construct(constructor_ref, name, nationality, url):
                     print("\nEscuderia cadastrada com sucesso. Pressione [ENTER] para continuar.")
                     input()
@@ -96,9 +92,6 @@ class Admin:
             opcao = input("      Digite o numero da opção: ")
 
             if opcao == '1':
-                driver_ref, number, code, forename, surname, birth_date, nationality = limpa_inputs(
-                    driver_ref, number, code, forename, surname, birth_date, nationality
-                )
                 if bd.insert_driver(driver_ref, number, code, forename, surname, birth_date, nationality):
                     print("\nPiloto cadastrado com sucesso. Pressione [ENTER] para continuar.")
                     input()
@@ -131,8 +124,8 @@ class Admin:
     def tela_relatorios(self):
         while True:
             limpa_tela()
-            print(f"Gerar relatórios                                   \n\n \
-   Escolha o tipo de relatório e pressione enter.                           \n")
+            print(f"------------------ Gerar Relatórios ------------------  \n\n \
+   Escolha o tipo de relatório e pressione [ENTER].                           \n")
 
             print(f"            1- Contagem de Resultados por Status.                   \n\n\
             2- Aeroportos Próximos a uma Cidade por Nome.                   \n\n\
@@ -142,11 +135,7 @@ class Admin:
 
             if opcao == '1':
                 self.tela_contagem_resultados_status()
-                
             elif opcao == '2':
                 continue
             elif opcao == '3':
-                self.tela_admin()
-
-            else:
-                print("Opção inválida. Pressione enter para tentar novamente.")
+                break
