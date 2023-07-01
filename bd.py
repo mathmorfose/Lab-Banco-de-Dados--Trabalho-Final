@@ -170,7 +170,7 @@ class BANCO_DADOS():
                 try:
                     sql =   "SELECT s.status, COUNT(r.statusid) AS quantidade_resultados \
                             FROM status s \
-                            JOIN results r ON s.statusid = r.statusid \
+                            LEFT JOIN results r ON s.statusid = r.statusid \
                             GROUP BY s.status \
                             ORDER BY quantidade_resultados DESC;"
                     cursor.execute(sql)
