@@ -20,14 +20,14 @@ class Escuderia:
     Último ano que há dados: {self.ultimo_ano}                          \n\n \
         Escolha uma opção:                                              \n\n \
             1- Consultar piloto pelo Forename.                          \n\n \
-            2- Visualizar relatórios.                                   \n\n \
+            2- Listar pilotos e a quantidade de vitórias                                  \n\n \
         ")
         opcao = input("         Digite o numero da opção: ")
 
         if opcao == '1':
             self.consultar_piloto()
         elif opcao == '2':
-            print("FAZER RELATORIO")
+            self.tela_get_numero_vitorias_pilotos_da_escuderia()
 
         else:
             print("opção inválida")
@@ -59,3 +59,19 @@ class Escuderia:
 
             else:
                 print("Opção inválida. Pressione enter para tentar novamente.")
+
+    def tela_get_numero_vitorias_pilotos_da_escuderia(self):
+        limpa_tela()
+        print("{:-^54}".format(" Listar pilotos e a quantidade de vitórias"), end="\n\n\n")
+
+        pilotos = bd.get_numero_vitorias_pilotos_da_escuderia(self.id)
+
+        limpa_tela()
+        print(f"Pilotos da escuderia {self.nome} e suas vitórias \n")
+        print("{:^35} | {:^8}".format("PILOTO", "VITÓRIAS"))
+        print("–"*46)
+        for piloto in pilotos:
+            print("{:^35} | {:>8}".format(piloto['nome_completo'], piloto['quantidade']))
+
+        print("\nPressione [ENTER] para voltar à tela de relatórios.")
+        input()
