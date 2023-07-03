@@ -18,7 +18,7 @@ class Piloto:
         Escolha uma opção:                                              \n\n \
             1- Visualizar relatórios.                                   \n\n \
         ")
-        opcao = input("         Digite o numero da opção: ")
+        opcao = input("         Digite o número da opção: ")
 
         if opcao == '1':
             print("FAZER RELATORIO")
