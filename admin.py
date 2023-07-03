@@ -120,6 +120,28 @@ class Admin:
 
         print("Pressione [ENTER] para continuar.")
         input()
+    
+    def tela_aeroportos_proximos_cidade(self):
+        limpa_tela()
+        print("Consultar aeroportos próximos à cidade \n\n")
+        print("    Digite a cidade e pressione [ENTER] \n")
+
+        cidade = input("    Cidade: ")
+        aeroportos = bd.get_aeroportos_proximos_cidade(cidade)
+
+        limpa_tela()
+        print(f"Aeroportos próximos à cidade de {cidade} \n")
+        print("{:^22} | {:^9} | {:^40} | {:^22} | {:^9} | {:^14} ".format("CIDADE", "IATA CODE", "AEROPORTO", "CIDADE AEROPORTO", "DISTÂNCIA", "TAMANHO"))
+
+        for a in aeroportos:
+            f_cidade = a["cidade"][:19] + '...' if len(a["cidade"]) > 22 else a["cidade"]
+            f_aeroporto = a["aeroporto"][:37] + '...' if len(a["aeroporto"]) > 40 else a["aeroporto"]
+            f_cidade_aeroporto = a["cidade_aeroporto"][:19] + '...' if len(a["cidade_aeroporto"]) > 22 else a["cidade_aeroporto"]
+            print("{:^22} | {:^9} | {:^40} | {:^22} | {:>9} | {:^14} ".format(f_cidade, a["iatacode"], f_aeroporto, f_cidade_aeroporto, a["distancia"], a["type"]))
+
+        print("\nPressione [ENTER] para continuar.")
+        input()
+
 
     def tela_relatorios(self):
         while True:
@@ -136,6 +158,6 @@ class Admin:
             if opcao == '1':
                 self.tela_contagem_resultados_status()
             elif opcao == '2':
-                continue
+                self.tela_aeroportos_proximos_cidade()
             elif opcao == '3':
                 break

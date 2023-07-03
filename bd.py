@@ -179,3 +179,18 @@ class BANCO_DADOS():
                     print("Erro durante a consulta de pilotos:", error)
         conn.close()
         return result
+    
+    def get_aeroportos_proximos_cidade(cidade):
+        result = None
+
+        conn = psycopg2.connect(**CONNECTION_PARAMS)
+        with conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
+                try:
+                    cursor.callproc("get_aeroportos_proximos", (cidade,))
+                    result = cursor.fetchall()
+
+                except (Exception, psycopg2.Error) as error:
+                    print("Erro:", error)
+        conn.close()
+        return result
