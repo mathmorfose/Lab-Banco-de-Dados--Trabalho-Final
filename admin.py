@@ -122,24 +122,36 @@ class Admin:
         input()
     
     def tela_aeroportos_proximos_cidade(self):
-        limpa_tela()
-        print("Consultar aeroportos próximos à cidade \n\n")
-        print("    Digite a cidade e pressione [ENTER] \n")
+        while True:
+            limpa_tela()
+            print("{:-^54}".format(" Consultar aeroportos próximos à cidade "), end="\n\n\n")
+            print("    - Digite a cidade e pressione [ENTER]")
+            print("    - Deixe o campo em branco para sair\n")
 
-        cidade = input("    Cidade: ")
-        aeroportos = bd.get_aeroportos_proximos_cidade(cidade)
+            cidade = input("    Cidade: ")
+            if len(cidade) <= 0:
+                return
+
+            aeroportos = bd.get_aeroportos_proximos_cidade(cidade)
+            if len(aeroportos) <= 0:
+                print(f"\nNenhum aeroporto encontrado próximo à cidade de {cidade}")
+                print("Pressione [ENTER] para pesquisar novamente.")
+                input()
+            else:
+                break
 
         limpa_tela()
         print(f"Aeroportos próximos à cidade de {cidade} \n")
-        print("{:^22} | {:^9} | {:^40} | {:^22} | {:^9} | {:^14} ".format("CIDADE", "IATA CODE", "AEROPORTO", "CIDADE AEROPORTO", "DISTÂNCIA", "TAMANHO"))
+        print("{:^22} | {:^9} | {:^40} | {:^22} | {:^14} | {:^7} ".format("CIDADE", "IATA CODE", "AEROPORTO", "CIDADE AEROPORTO", "DISTÂNCIA (KM)", "TAMANHO"))
 
         for a in aeroportos:
             f_cidade = a["cidade"][:19] + '...' if len(a["cidade"]) > 22 else a["cidade"]
             f_aeroporto = a["aeroporto"][:37] + '...' if len(a["aeroporto"]) > 40 else a["aeroporto"]
             f_cidade_aeroporto = a["cidade_aeroporto"][:19] + '...' if len(a["cidade_aeroporto"]) > 22 else a["cidade_aeroporto"]
-            print("{:^22} | {:^9} | {:^40} | {:^22} | {:>9} | {:^14} ".format(f_cidade, a["iatacode"], f_aeroporto, f_cidade_aeroporto, a["distancia"], a["type"]))
+            f_type = "médio" if (a["type"] == 'medium_airport ') else "grande"
+            print("{:^22} | {:^9} | {:^40} | {:^22} | {:>14} | {:<7} ".format(f_cidade, a["iatacode"], f_aeroporto, f_cidade_aeroporto, a["distancia"], f_type))
 
-        print("\nPressione [ENTER] para continuar.")
+        print("\nPressione [ENTER] para voltar à tela de relatórios.")
         input()
 
 
