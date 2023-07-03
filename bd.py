@@ -209,3 +209,18 @@ class BANCO_DADOS():
                     print("Erro:", error)
         conn.close()
         return result
+
+    def get_contagem_status_da_escuderia(id_escuderia):
+        result = None
+
+        conn = psycopg2.connect(**CONNECTION_PARAMS)
+        with conn:
+            with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
+                try:
+                    cursor.callproc("get_contagem_status_da_escuderia", (id_escuderia,))
+                    result = cursor.fetchall()
+
+                except (Exception, psycopg2.Error) as error:
+                    print("Erro:", error)
+        conn.close()
+        return result
