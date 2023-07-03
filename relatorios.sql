@@ -57,6 +57,7 @@ BEGIN
     WHERE 
         A.isocountry = 'BR' AND
         A.type IN ('medium_airport', 'large_airport') AND
-        C.name = nome_cidade;
+        C.name = nome_cidade
+    ORDER BY distancia;
 END;
 $$ LANGUAGE plpgsql;
