@@ -61,3 +61,42 @@ BEGIN
     ORDER BY distancia;
 END;
 $$ LANGUAGE plpgsql;
+
+-- relatórios escuderia
+
+-- 3
+DROP INDEX IF EXISTS IdxResultsConstructors;
+CREATE INDEX IdxResultsConstructors 
+ON results 
+USING BTREE(constructorID)
+INCLUDE (driverID, position)
+;
+
+CREATE OR REPLACE FUNCTION get_numero_vitorias_pilotos_da_escuderia(escuderia_id INTEGER)
+RETURNS TABLE (
+    nome_completo TEXT,
+    quantidade BIGINT
+)
+AS $$
+BEGIN
+  RETURN QUERY
+    SELECT 
+        D.forename || ' ' || D.surname AS nome_completo,
+        COUNT(CASE WHEN R.position = 1 THEN 1 ELSE NULL END) AS quantidade
+    FROM results R
+        JOIN driver D ON R.driverID = D.driverID AND R.constructorID = escuderia_id
+    GROUP BY nome_completo
+    ORDER BY quantidade DESC
+    ;
+END;
+$$ LANGUAGE plpgsql;
+
+-- alternativa
+
+-- SELECT DxC.forename || ' ' || DxC.surname AS nome_completo, COUNT(R.driverID) AS quantidade
+-- FROM (results R
+-- 	JOIN driver D ON R.driverID = D.driverID AND R.constructorID = 1) DxC
+-- 	LEFT JOIN results R ON DxC.resultID = R.resultID AND R.position = 1
+-- GROUP BY nome_completo
+-- ORDER BY quantidade DESC
+-- ;
