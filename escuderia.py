@@ -22,7 +22,7 @@ class Escuderia:
             1- Consultar piloto pelo Forename.                          \n\n \
             2- Visualizar relatórios.                                   \n\n \
         ")
-        opcao = input("         Digite o numero da opção: ")
+        opcao = input("         Digite o número da opção: ")
 
         if opcao == '1':
             self.consultar_piloto()
@@ -44,7 +44,7 @@ class Escuderia:
             2- Digitar novamente o forename.        .                       \n\n \
             3- Cancelar cadastro e voltar para tela de Overview.            \n\n")
 
-            opcao = input("      Digite o numero da opção: ")
+            opcao = input("      Digite o número da opção: ")
 
             if opcao == '1':
                 bd.consultar_pilotos_por_forename(forename, self.id)

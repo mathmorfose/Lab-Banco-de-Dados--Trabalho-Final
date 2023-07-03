@@ -13,17 +13,17 @@ class Admin:
         while True:
             limpa_tela()
             print(f"Você está logado como: Administrador                  \n\n \
-        Quantidade de pilotos cadastrados: {self.pilotos_quantidade}      \n \
-        Quantidade de escuderias cadastradas: {self.escuderias_quantidade}\n \
-        Quantidade de corridas cadastradas: {self.corridas_quantidade}    \n \
-        Quantidade de temporadas cadastradas: {self.temporadas_quantidade}\n\n \
+        Pilotos cadastrados: {self.pilotos_quantidade}      \n \
+        Escuderias cadastradas: {self.escuderias_quantidade}\n \
+        Corridas cadastradas: {self.corridas_quantidade}    \n \
+        Temporadas cadastradas: {self.temporadas_quantidade}\n\n \
             Escolha uma opção:                                            \n\n \
                 1- Cadastrar Escuderia.                                   \n\n \
                 2- Cadastrar Pilotos.                                     \n\n \
                 3- Visualizar relatórios.                                 \n\n \
-                0- Sair                                                   \n\n \
+                0- Sair.                                                  \n\n \
             ")
-            opcao = input("         Digite o numero da opção: ")
+            opcao = input("         Digite o número da opção: ")
 
             if opcao == '1':
                 self.cadastrar_escuderia()
@@ -47,9 +47,9 @@ class Admin:
             print(f"\n      Escolha uma opção:                              \n\n \
             1- Confirmar cadastro.                                          \n\n \
             2- Digitar novamente os dados da Escuderia.                     \n\n \
-            3- Cancelar cadastro e voltar para tela de Overview.            \n\n")
+            0- Cancelar cadastro e voltar para tela de Overview.            \n\n")
 
-            opcao = input("      Digite o numero da opção: ")
+            opcao = input("      Digite o número da opção: ")
 
             if opcao == '1':
                 if bd.insert_construct(constructor_ref, name, nationality, url):
@@ -64,7 +64,7 @@ class Admin:
                 
             elif opcao == '2':
                 continue
-            elif opcao == '3':
+            elif opcao == '0':
                 break
             else:
                 print("\nOpção inválida! Reiniciando cadastro")
@@ -87,9 +87,9 @@ class Admin:
             print(f"\n      Escolha uma opção:                              \n\n \
             1- Confirmar cadastro.                                          \n\n \
             2- Digitar novamente os dados do Piloto.                        \n\n \
-            3- Cancelar cadastro e voltar para tela de Overview.            \n\n")
+            0- Cancelar cadastro e voltar para tela de Overview.            \n\n")
 
-            opcao = input("      Digite o numero da opção: ")
+            opcao = input("      Digite o número da opção: ")
 
             if opcao == '1':
                 if bd.insert_driver(driver_ref, number, code, forename, surname, birth_date, nationality):
@@ -103,7 +103,7 @@ class Admin:
                     continue
             elif opcao == '2':
                 continue
-            elif opcao == '3':
+            elif opcao == '0':
                 break
             else:
                 print("\nOpção inválida! Reiniciando cadastro")
@@ -113,12 +113,13 @@ class Admin:
     def tela_contagem_resultados_status(self):
         limpa_tela()
         todos_status = bd.get_contagem_resultados_status()
-        print(f"Contagem de Resultados por Status em ordem decrescente\n")
-        print("{:^18} | {:^12}".format("STATUS", "CONTAGEM"))
+        print("{:-^60}".format(" Contagem de Resultados por Status em ordem decrescente "), end="\n\n\n")
+        print("{:^18} | {:^9}".format("STATUS", "CONTAGEM"))
+        print("—"*32)
         for status in todos_status:
-            print("{:^18} | {:^12}".format(status['status'], status['quantidade_resultados']))
+            print("{:^18} | {:>8}".format(status['status'], status['quantidade_resultados']))
 
-        print("Pressione [ENTER] para continuar.")
+        print("\nPressione [ENTER] para continuar.")
         input()
     
     def tela_aeroportos_proximos_cidade(self):
@@ -134,15 +135,16 @@ class Admin:
 
             aeroportos = bd.get_aeroportos_proximos_cidade(cidade)
             if len(aeroportos) <= 0:
-                print(f"\nNenhum aeroporto encontrado próximo à cidade de {cidade}")
+                print(f"\nNenhum aeroporto encontrado próximo à cidade de '{cidade}'")
                 print("Pressione [ENTER] para pesquisar novamente.")
                 input()
             else:
                 break
 
         limpa_tela()
-        print(f"Aeroportos próximos à cidade de {cidade} \n")
+        print(f"Aeroportos próximos à cidade de '{cidade}' \n")
         print("{:^22} | {:^9} | {:^40} | {:^22} | {:^14} | {:^7} ".format("CIDADE", "IATA CODE", "AEROPORTO", "CIDADE AEROPORTO", "DISTÂNCIA (KM)", "TAMANHO"))
+        print("—"*130)
 
         for a in aeroportos:
             f_cidade = a["cidade"][:19] + '...' if len(a["cidade"]) > 22 else a["cidade"]
@@ -163,13 +165,13 @@ class Admin:
 
             print(f"            1- Contagem de Resultados por Status.                   \n\n\
             2- Aeroportos Próximos a uma Cidade por Nome.                   \n\n\
-            3- Voltar para tela de Overview.            \n\n")
+            0- Voltar para tela de Overview.            \n\n")
 
-            opcao = input("      Digite o numero da opção: ")
+            opcao = input("      Digite o número da opção: ")
 
             if opcao == '1':
                 self.tela_contagem_resultados_status()
             elif opcao == '2':
                 self.tela_aeroportos_proximos_cidade()
-            elif opcao == '3':
+            elif opcao == '0':
                 break
