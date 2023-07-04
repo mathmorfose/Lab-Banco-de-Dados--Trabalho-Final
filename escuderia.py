@@ -41,30 +41,27 @@ class Escuderia:
     def consultar_piloto(self):
         while True:
             limpa_tela()
-            print(f"Consultar se piloto já correu pela escuderia            \n\n \
-   Digite o forename do piloto e pressione enter                            \n")
+            print("Consultar se piloto já correu pela escuderia            \n\n \
+   Digite o forename do piloto e pressione [ENTER]                            \n")
 
             forename = input("   Forename: ")
-            print(f"\n      Escolha uma opção:                              \n\n \
+            print("\n      Escolha uma opção:                              \n\n \
             1- Confirmar forename.                                          \n\n \
-            2- Digitar novamente o forename.        .                       \n\n \
-            3- Cancelar cadastro e voltar para tela de Overview.            \n\n")
+            2- Digitar novamente o forename.                               \n\n")
 
             opcao = input("      Digite o número da opção: ")
 
             if opcao == '1':
                 bd.consultar_pilotos_por_forename(forename, self.id)
-                print("Pressione enter para continuar.")
+                print("Pressione [ENTER] para continuar.")
                 input()
-                self.tela_escuderia()
+                break
 
             elif opcao == '2':
                 continue
-            elif opcao == '3':
-                self.tela_escuderia()
 
             else:
-                print("Opção inválida. Pressione enter para tentar novamente.")
+                print("Opção inválida. Pressione [ENTER] para tentar novamente.")
 
     def tela_get_numero_vitorias_pilotos_da_escuderia(self):
         limpa_tela()
