@@ -17,15 +17,39 @@ class Piloto:
         Primeiro ano que há dados: {self.primeiro_ano}                      \n \
         Último ano que há dados: {self.ultimo_ano}                          \n\n \
             Escolha uma opção:                                              \n\n \
-                1- Visualizar relatórios.                                   \n\n \
+                1- Listar vitórias.                                   \n\n \
                 0- Sair.                                   \n\n \
             ")
             opcao = input("         Digite o número da opção: ")
 
             if opcao == '1':
-                print("FAZER RELATORIO")
+                self.tela_get_all_vitorias_piloto()
             elif opcao == '0':
                 break
 
             else:
                 print("opção inválida")
+
+    def tela_get_all_vitorias_piloto(self):
+        limpa_tela()
+        print("{:-^54}".format(" Listar vitórias"), end="\n\n\n")
+
+        vitorias = bd.get_all_vitorias_piloto(self.id)
+
+        print(f"Vitórias do piloto {self.nome} \n")
+
+        for vitoria in vitorias:
+            if (vitoria['name'] is None and vitoria['year'] is None):
+                print("\n\n{:^35}".format("TOTAL DE VITÓRIAS"))
+                print("–"*35)
+                print("{:^35}".format(vitoria['vitorias']))
+
+            elif (vitoria['name'] is None):
+                print("\n\n{:^35}".format(f"{vitoria['year']} – {vitoria['vitorias']} VITÓRIAS "))
+                print("–"*35)
+
+            else:
+                print("{:^35}".format(vitoria['name']))
+
+        print("\nPressione [ENTER] para voltar à tela de relatórios.")
+        input()
