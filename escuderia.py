@@ -12,28 +12,31 @@ class Escuderia:
         self.ultimo_ano = ultimo_ano
     
     def tela_escuderia(self):
-        limpa_tela()
-        print(f"Você está logado como: {self.nome}                      \n\n \
-    Quantidade de vitórias: {self.vitorias_quantidade}                  \n \
-    Quantidade de pilotos diferentes que já correram pela escuderia: {self.pilotos_quantidade}     \n \
-    Primeiro ano que há dados: {self.primeiro_ano}                      \n \
-    Último ano que há dados: {self.ultimo_ano}                          \n\n \
-        Escolha uma opção:                                              \n\n \
-            1- Consultar piloto pelo Forename.                          \n\n \
-            2- Listar pilotos e a quantidade de vitórias                                  \n\n \
-            3- Listar quantidade de resultados por cada status                            \n\n \
-        ")
-        opcao = input("         Digite o número da opção: ")
+        while True:
+            limpa_tela()
+            print(f"Você está logado como: {self.nome}                      \n\n \
+        Quantidade de vitórias: {self.vitorias_quantidade}                  \n \
+        Quantidade de pilotos diferentes que já correram pela escuderia: {self.pilotos_quantidade}     \n \
+        Primeiro ano que há dados: {self.primeiro_ano}                      \n \
+        Último ano que há dados: {self.ultimo_ano}                          \n\n \
+            Escolha uma opção:                                              \n\n \
+                1- Consultar piloto pelo Forename.                          \n\n \
+                2- Listar pilotos e a quantidade de vitórias                                  \n\n \
+                3- Listar quantidade de resultados por cada status                            \n\n \
+                0- Sair                            \n\n \
+            ")
+            opcao = input("         Digite o número da opção: ")
 
-        if opcao == '1':
-            self.consultar_piloto()
-        elif opcao == '2':
-            self.tela_get_numero_vitorias_pilotos_da_escuderia()
-        elif opcao == '3':
-            self.tela_get_contagem_status_da_escuderia()
-
-        else:
-            print("opção inválida")
+            if opcao == '1':
+                self.consultar_piloto()
+            elif opcao == '2':
+                self.tela_get_numero_vitorias_pilotos_da_escuderia()
+            elif opcao == '3':
+                self.tela_get_contagem_status_da_escuderia()
+            elif opcao == '0':
+                break
+            else:
+                print("opção inválida")
 
     def consultar_piloto(self):
         while True:
