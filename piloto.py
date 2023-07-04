@@ -10,18 +10,22 @@ class Piloto:
         self.ultimo_ano = ultimo_ano
 
     def tela_piloto(self):
-        limpa_tela()
-        print(f"Você está logado como: {self.nome}                      \n\n \
-    Quantidade de vitórias: {self.vitorias_quantidade}                  \n \
-    Primeiro ano que há dados: {self.primeiro_ano}                      \n \
-    Último ano que há dados: {self.ultimo_ano}                          \n\n \
-        Escolha uma opção:                                              \n\n \
-            1- Visualizar relatórios.                                   \n\n \
-        ")
-        opcao = input("         Digite o número da opção: ")
+        while True:
+            limpa_tela()
+            print(f"Você está logado como: {self.nome}                      \n\n \
+        Quantidade de vitórias: {self.vitorias_quantidade}                  \n \
+        Primeiro ano que há dados: {self.primeiro_ano}                      \n \
+        Último ano que há dados: {self.ultimo_ano}                          \n\n \
+            Escolha uma opção:                                              \n\n \
+                1- Visualizar relatórios.                                   \n\n \
+                0- Sair.                                   \n\n \
+            ")
+            opcao = input("         Digite o número da opção: ")
 
-        if opcao == '1':
-            print("FAZER RELATORIO")
-            
-        else:
-            print("opção inválida")
+            if opcao == '1':
+                print("FAZER RELATORIO")
+            elif opcao == '0':
+                break
+
+            else:
+                print("opção inválida")
