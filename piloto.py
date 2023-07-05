@@ -48,7 +48,8 @@ class Piloto:
                 print("{:^35}".format(vitoria['vitorias']))
 
             elif (vitoria['name'] is None):
-                print("\n\n{:^35}".format(f"{vitoria['year']} – {vitoria['vitorias']} VITÓRIAS "))
+                texto = "VITÓRIA" if vitoria['vitorias'] == 1 else "VITÓRIAS"
+                print("\n\n{:^35}".format(f"{vitoria['year']} – {vitoria['vitorias']} {texto} "))
                 print("–"*35)
 
             else:
