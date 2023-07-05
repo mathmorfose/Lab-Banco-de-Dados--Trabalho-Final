@@ -18,12 +18,15 @@ class Piloto:
         Último ano que há dados: {self.ultimo_ano}                          \n\n \
             Escolha uma opção:                                              \n\n \
                 1- Listar vitórias.                                   \n\n \
+                2- Listar quantidade de resultados para cada status                                   \n\n \
                 0- Sair.                                   \n\n \
             ")
             opcao = input("         Digite o número da opção: ")
 
             if opcao == '1':
                 self.tela_get_all_vitorias_piloto()
+            elif opcao == '2':
+                self.tela_get_contagem_status_do_piloto()
             elif opcao == '0':
                 break
 
@@ -50,6 +53,21 @@ class Piloto:
 
             else:
                 print("{:^35}".format(vitoria['name']))
+
+        print("\nPressione [ENTER] para voltar à tela de relatórios.")
+        input()
+
+    def tela_get_contagem_status_do_piloto(self):
+        limpa_tela()
+        print("{:-^54}".format(" Listar quantidade de resultados para cada status "), end="\n\n\n")
+
+        resultados = bd.get_contagem_status_do_piloto(self.id)
+
+        print(f"Quantidade resultados do piloto {self.nome} por status \n")
+        print("{:^18} | {:^10}".format("STATUS", "QUANTIDADE"))
+        print("–"*31)
+        for resultado in resultados:
+            print("{:^18} | {:>10}".format(resultado['status'], resultado['quantidade_resultados']))
 
         print("\nPressione [ENTER] para voltar à tela de relatórios.")
         input()

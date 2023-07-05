@@ -22,7 +22,7 @@ class Escuderia:
             Escolha uma opção:                                              \n\n \
                 1- Consultar piloto pelo Forename.                          \n\n \
                 2- Listar pilotos e a quantidade de vitórias                                  \n\n \
-                3- Listar quantidade de resultados por cada status                            \n\n \
+                3- Listar quantidade de resultados para cada status                            \n\n \
                 0- Sair                            \n\n \
             ")
             opcao = input("         Digite o número da opção: ")
@@ -80,7 +80,7 @@ class Escuderia:
 
     def tela_get_contagem_status_da_escuderia(self):
         limpa_tela()
-        print("{:-^54}".format(" Listar quantidade de resultados por cada status "), end="\n\n\n")
+        print("{:-^54}".format(" Listar quantidade de resultados para cada status "), end="\n\n\n")
 
         resultados = bd.get_contagem_status_da_escuderia(self.id)
 
