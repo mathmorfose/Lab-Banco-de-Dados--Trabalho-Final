@@ -256,7 +256,7 @@ USING BTREE(type)
 WHERE isocountry = 'BR' AND type IN ('medium_airport', 'large_airport');
 ;
 
-DROP FUNCTION IF EXISTS get_aeroportos_proximos(text); --tive que dropar pq ta mudei o numero de argumentos retornados
+DROP FUNCTION IF EXISTS get_aeroportos_proximos(text);
 CREATE OR REPLACE FUNCTION get_aeroportos_proximos(nome_cidade TEXT)
 RETURNS TABLE (
     cidade TEXT,
