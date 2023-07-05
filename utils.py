@@ -1,5 +1,6 @@
 from os import system, name
 
+
 # realiza o 'clear' da tela
 # independente do sistema operacional
 def limpa_tela():
@@ -10,6 +11,7 @@ def limpa_tela():
         # sistemas mac e linux
         system('clear')
 
+
 # remove alguns caracteres especiais do texto
 def limpa_inputs(*valores):
     caracteres_banidos = ["'", "%", ";"]
@@ -19,11 +21,12 @@ def limpa_inputs(*valores):
             for caracter in caracteres_banidos:
                 valor = valor.replace(caracter, "")
         valores_filtrados.append(valor)
-    
+
     if len(valores_filtrados) == 1:
         return valores_filtrados[0]
 
     return tuple(valores_filtrados)
+
 
 # formata a query SQL com os valores passados
 def formatar_query(sql, valores):
@@ -40,5 +43,5 @@ def formatar_query(sql, valores):
             valores_formatados.append("null")
         else:
             valores_formatados.append("'{}'".format(valor))
-    
+
     return sql.format(*valores_formatados)

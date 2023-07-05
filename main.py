@@ -6,12 +6,14 @@ from piloto import Piloto
 from bd import BANCO_DADOS as bd
 from utils import limpa_tela, formatar_query
 
+
 def criar_admin():
     pilotos_qnt = bd.select("SELECT COUNT(*) as contagem FROM driver")[0]["contagem"]
     escuderia_qnt = bd.select("SELECT COUNT(*) as contagem FROM constructors")[0]["contagem"]
     corridas_qnt = bd.select("SELECT COUNT(*) as contagem FROM races")[0]["contagem"]
     temporadas_qnt = bd.select("SELECT COUNT(*) as contagem FROM seasons")[0]["contagem"]
     return Admin(pilotos_qnt, escuderia_qnt, corridas_qnt, temporadas_qnt)
+
 
 def criar_escuderia(constructorid):
     sql = "SELECT name FROM constructors WHERE constructorid = {}"
@@ -25,6 +27,7 @@ def criar_escuderia(constructorid):
 
     return Escuderia(constructorid, nome_escuderia, vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano)
 
+
 def criar_piloto(driverid):
     sql = "SELECT forename || ' ' || surname as nome_completo FROM driver WHERE driverid = {}"
     values = (driverid, )
@@ -37,9 +40,11 @@ def criar_piloto(driverid):
 
     return Piloto(driverid, nome_piloto, vitorias_quantidade, primeiro_ano, ultimo_ano)
 
+
 def registrar_login(user_id):
     if not bd.insert_log_table(user_id):
         print('\nHouve um erro registrando seu login!')
+
 
 def fazer_login(username, password):
     values = (username, password)
@@ -67,7 +72,8 @@ def fazer_login(username, password):
         piloto.tela_piloto()
 
     return True
-      
+
+
 def carregando():
     for _ in range(3):
         sys.stdout.flush()
@@ -77,9 +83,11 @@ def carregando():
     time.sleep(0.5)
     print(".")
 
+
 def msg_sair():
-    print(f"\n\tObrigado por utilizar o sistema! Volte sempre!\n\
+    print("\n\tObrigado por utilizar o sistema! Volte sempre!\n\
     ----------------------- Encerrando ----------------------- \n")
+
 
 while True:
     limpa_tela()
@@ -98,7 +106,7 @@ while True:
 
     print("\n                       Autenticando", end="")
 
-    #carregando()
+    # carregando()
 
     if fazer_login(username, password):
         msg_sair()

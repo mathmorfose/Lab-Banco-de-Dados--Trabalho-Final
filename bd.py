@@ -1,7 +1,7 @@
 import psycopg2
 import psycopg2.extras
 import credenciais as cd
-from utils import formatar_query 
+from utils import formatar_query
 
 CONNECTION_PARAMS = {
     'host': "localhost",
@@ -10,6 +10,7 @@ CONNECTION_PARAMS = {
     'password': cd.PASSWORD,
 }
 
+
 class BANCO_DADOS():
 
     def select(query):
@@ -17,7 +18,7 @@ class BANCO_DADOS():
 
         # inicia conexão
         conn = psycopg2.connect(**CONNECTION_PARAMS)
-        
+
         # inicia e commita automaticamente transaction
         with conn:
             # cria e fecha automaticamente cursor
@@ -29,7 +30,7 @@ class BANCO_DADOS():
                     print(f"\nErro na execução do select: {error}")
         conn.close()
         return selected_rows
-    
+
     def insert_construct(constructor_ref, name, nationality, url):
         result = None
 
@@ -39,7 +40,7 @@ class BANCO_DADOS():
                 try:
                     sql = "INSERT INTO Constructors (ConstructorRef, Name, Nationality, URL) VALUES ({},{},{},{})"
                     values = (constructor_ref, name, nationality, url)
-                    
+
                     cursor.execute(
                         formatar_query(sql, values)
                     )
@@ -58,9 +59,8 @@ class BANCO_DADOS():
             with conn.cursor() as cursor:
                 try:
                     sql = "INSERT INTO Driver (driverRef, number, code, forename, surname, dob, nationality) VALUES ({},{},{},{},{},{},{})"
-                    values = (driver_ref, number, code, forename,
-                            surname, date_of_birth, nationality)
-                    
+                    values = (driver_ref, number, code, forename, surname, date_of_birth, nationality)
+
                     cursor.execute(
                         formatar_query(sql, values)
                     )
@@ -80,7 +80,7 @@ class BANCO_DADOS():
                 try:
                     sql = "INSERT INTO LogTable (userid, login_date, login_time) VALUES ({}, CURRENT_DATE, CURRENT_TIME)"
                     values = (user,)
-                    
+
                     cursor.execute(
                         formatar_query(sql, values)
                     )
@@ -119,7 +119,7 @@ class BANCO_DADOS():
                 print("----------------------")
         else:
             print("Nenhum piloto encontrado com esse Forename que tenha corrido pela escuderia logada.")
-    
+
     def overview_escuderia(escuderia_id):
         result = None
 
@@ -136,7 +136,7 @@ class BANCO_DADOS():
 
                     cursor.callproc("get_primeiro_ultimo_ano_escuderia", (escuderia_id,))
                     primeiro_ano, ultimo_ano = cursor.fetchone()
-                    
+
                     result = (quantidade_vitorias, total_pilotos, primeiro_ano, ultimo_ano)
                 except (Exception, psycopg2.Error) as error:
                     print("Erro ao executar a função:", error)
@@ -168,18 +168,18 @@ class BANCO_DADOS():
         with conn:
             with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
                 try:
-                    sql =   "SELECT s.status, COUNT(r.statusid) AS quantidade_resultados \
-                            FROM status s \
-                            LEFT JOIN results r ON s.statusid = r.statusid \
-                            GROUP BY s.status \
-                            ORDER BY quantidade_resultados DESC;"
+                    sql = "SELECT s.status, COUNT(r.statusid) AS quantidade_resultados \
+                           FROM status s \
+                           LEFT JOIN results r ON s.statusid = r.statusid \
+                           GROUP BY s.status \
+                           ORDER BY quantidade_resultados DESC;"
                     cursor.execute(sql)
                     result = cursor.fetchall()
                 except (Exception, psycopg2.Error) as error:
                     print("Erro durante a consulta de pilotos:", error)
         conn.close()
         return result
-    
+
     def get_aeroportos_proximos_cidade(cidade):
         result = None
 

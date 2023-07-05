@@ -1,6 +1,6 @@
-import os
 from bd import BANCO_DADOS as bd
 from utils import limpa_tela
+
 
 class Escuderia:
     def __init__(self, id, nome, vitorias_quantidade, pilotos_quantidade, primeiro_ano, ultimo_ano):
@@ -10,7 +10,7 @@ class Escuderia:
         self.pilotos_quantidade = pilotos_quantidade
         self.primeiro_ano = primeiro_ano
         self.ultimo_ano = ultimo_ano
-    
+
     def tela_escuderia(self):
         while True:
             limpa_tela()

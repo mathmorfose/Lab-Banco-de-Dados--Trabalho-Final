@@ -1,6 +1,7 @@
 from bd import BANCO_DADOS as bd
 from utils import limpa_tela
 
+
 class Piloto:
     def __init__(self, id, nome, vitorias_quantidade, primeiro_ano, ultimo_ano):
         self.nome = nome

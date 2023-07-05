@@ -1,6 +1,6 @@
-import os
 from bd import BANCO_DADOS as bd
-from utils import limpa_tela, limpa_inputs
+from utils import limpa_tela
+
 
 class Admin:
     def __init__(self, pilotos_quantidade, escuderias_quantidade, corridas_quantidade, temporadas_quantidade):
@@ -8,7 +8,7 @@ class Admin:
         self.escuderias_quantidade = escuderias_quantidade
         self.corridas_quantidade = corridas_quantidade
         self.temporadas_quantidade = temporadas_quantidade
-    
+
     def tela_admin(self):
         while True:
             limpa_tela()
@@ -37,14 +37,14 @@ class Admin:
     def cadastrar_escuderia(self):
         while True:
             limpa_tela()
-            print(f"---------------- Cadastro de Escuderia ---------------- \n\n \
+            print("---------------- Cadastro de Escuderia ---------------- \n\n \
    Digite o valor de cada dado e pressione [ENTER]                            \n")
 
             constructor_ref = input("   ConstructorRef: ")
             name = input("   Name: ")
             nationality = input("   Nationality: ")
             url = input("   URL: ")
-            print(f"\n      Escolha uma opção:                              \n\n \
+            print("\n      Escolha uma opção:                              \n\n \
             1- Confirmar cadastro.                                          \n\n \
             2- Digitar novamente os dados da Escuderia.                     \n\n \
             0- Cancelar cadastro e voltar para tela de Overview.            \n\n")
@@ -61,7 +61,7 @@ class Admin:
                     print("Pressione [ENTER] para tentar novamente.")
                     input()
                     continue
-                
+
             elif opcao == '2':
                 continue
             elif opcao == '0':
@@ -74,7 +74,7 @@ class Admin:
     def cadastrar_piloto(self):
         while True:
             limpa_tela()
-            print(f"----------------- Cadastro de Piloto -----------------  \n\n \
+            print("----------------- Cadastro de Piloto -----------------  \n\n \
    Digite o valor de cada dado e pressione [ENTER]                            \n")
 
             driver_ref = input("   Driverref: ")
@@ -84,7 +84,7 @@ class Admin:
             surname = input("   Surname: ")
             birth_date = input("   Date of Birth: ")
             nationality = input("   Nationality: ")
-            print(f"\n      Escolha uma opção:                              \n\n \
+            print("\n      Escolha uma opção:                              \n\n \
             1- Confirmar cadastro.                                          \n\n \
             2- Digitar novamente os dados do Piloto.                        \n\n \
             0- Cancelar cadastro e voltar para tela de Overview.            \n\n")
@@ -121,7 +121,7 @@ class Admin:
 
         print("\nPressione [ENTER] para continuar.")
         input()
-    
+
     def tela_aeroportos_proximos_cidade(self):
         while True:
             limpa_tela()
@@ -156,14 +156,13 @@ class Admin:
         print("\nPressione [ENTER] para voltar à tela de relatórios.")
         input()
 
-
     def tela_relatorios(self):
         while True:
             limpa_tela()
-            print(f"------------------ Gerar Relatórios ------------------  \n\n \
+            print("------------------ Gerar Relatórios ------------------  \n\n \
    Escolha o tipo de relatório e pressione [ENTER].                           \n")
 
-            print(f"            1- Contagem de Resultados por Status.                   \n\n\
+            print("            1- Contagem de Resultados por Status.                   \n\n\
             2- Aeroportos Próximos a uma Cidade por Nome.                   \n\n\
             0- Voltar para tela de Overview.            \n\n")
 
