@@ -143,7 +143,7 @@ class Admin:
 
         limpa_tela()
         print(f"Aeroportos próximos à cidade de '{cidade}' \n")
-        print("{:^22} | {:^9} | {:^40} | {:^22} | {:^7} | {:^14} | {:^7} ".format("CIDADE", "IATA CODE", "AEROPORTO", "CIDADE AEROPORTO", "REGIÃO", "DISTÂNCIA (KM)", "TAMANHO"))
+        print("{:^22} | {:^9} | {:^40} | {:^22} | {:^6} | {:^14} | {:^7} ".format("CIDADE", "IATA CODE", "AEROPORTO", "CIDADE AEROPORTO", "REGIÃO", "DISTÂNCIA (KM)", "TAMANHO"))
         print("—"*139)
 
         for a in aeroportos:
@@ -151,9 +151,9 @@ class Admin:
             f_iatacode = "---" if not a["iatacode"] else a["iatacode"]
             f_aeroporto = a["aeroporto"][:37] + '...' if len(a["aeroporto"]) > 40 else a["aeroporto"]
             f_cidade_aeroporto = a["cidade_aeroporto"][:19] + '...' if len(a["cidade_aeroporto"]) > 22 else a["cidade_aeroporto"]
-            f_estado = a["estado"].strip()
+            f_estado = a["estado"][2:].strip().replace("-", "")
             f_type = "médio" if (a["type"] == 'medium_airport ') else "grande"
-            print("{:^22} | {:^9} | {:^40} | {:^22} | {:^7} | {:>14} | {:<7} ".format(f_cidade, f_iatacode, f_aeroporto, f_cidade_aeroporto, f_estado, a["distancia"], f_type))
+            print("{:^22} | {:^9} | {:^40} | {:^22} | {:^6} | {:>14} | {:<7} ".format(f_cidade, f_iatacode, f_aeroporto, f_cidade_aeroporto, f_estado, a["distancia"], f_type))
 
         print("\nPressione [ENTER] para voltar à tela de relatórios.")
         input()
