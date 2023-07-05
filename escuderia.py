@@ -41,27 +41,34 @@ class Escuderia:
     def consultar_piloto(self):
         while True:
             limpa_tela()
-            print("Consultar se piloto já correu pela escuderia            \n\n \
-   Digite o forename do piloto e pressione [ENTER]                            \n")
+            print("{:-^54}".format("Consultar se piloto já correu pela escuderia"), end="\n\n")
+            print("    - Digite o primeiro nome do piloto e pressione [ENTER]")
+            print("    - Deixe o campo em branco para sair\n")
 
             forename = input("   Forename: ")
-            print("\n      Escolha uma opção:                              \n\n \
-            1- Confirmar forename.                                          \n\n \
-            2- Digitar novamente o forename.                               \n\n")
+            if len(forename) <= 0:
+                return
 
-            opcao = input("      Digite o número da opção: ")
+            pilotos = bd.consultar_pilotos_por_forename(forename, self.id)
 
-            if opcao == '1':
-                bd.consultar_pilotos_por_forename(forename, self.id)
-                print("Pressione [ENTER] para continuar.")
+            if len(pilotos) <= 0:
+                print(f"\nNenhum piloto encontrado com o primeiro nome '{forename}' que tenha corrido pela escuderia logada.")
+                print("Pressione [ENTER] para pesquisar novamente.")
                 input()
+            else:
                 break
 
-            elif opcao == '2':
-                continue
+        limpa_tela()
+        print(f"\nPilotos encontrados da escuderia {self.nome} com o primeiro nome {forename}:\n")
+        for piloto in pilotos:
+            forename, surname, date_of_birth, nationality = piloto
+            print("Nome completo:", forename, surname)
+            print("Data de Nascimento(AAAA/MM/DD):", date_of_birth)
+            print("Nacionalidade:", nationality)
+            print("----------------------")
 
-            else:
-                print("Opção inválida. Pressione [ENTER] para tentar novamente.")
+        print("\nPressione [ENTER] para voltar à tela de relatórios.")
+        input()
 
     def tela_get_numero_vitorias_pilotos_da_escuderia(self):
         limpa_tela()

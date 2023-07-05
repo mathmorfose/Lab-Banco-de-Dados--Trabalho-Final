@@ -103,22 +103,11 @@ class BANCO_DADOS():
                     values = (forename, id_escuderia_logada)
 
                     cursor.execute(sql, values)
-                    selected_rows = cursor.fetchall()
+                    result = cursor.fetchall()
                 except (Exception, psycopg2.Error) as error:
                     print("Erro durante a consulta de pilotos:", error)
         conn.close()
-
-        # Verificar se existem resultados
-        if len(selected_rows) > 0:
-            print("\nPilotos encontrados:")
-            for row in selected_rows:
-                forename, surname, date_of_birth, nationality = row
-                print("Nome completo:", forename, surname)
-                print("Data de Nascimento(AAAA/MM/DD):", date_of_birth)
-                print("Nacionalidade:", nationality)
-                print("----------------------")
-        else:
-            print("Nenhum piloto encontrado com esse Forename que tenha corrido pela escuderia logada.")
+        return result
 
     def overview_escuderia(escuderia_id):
         result = None
