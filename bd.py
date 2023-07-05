@@ -130,6 +130,8 @@ class BancoDados():
 
                     cursor.callproc("get_primeiro_ultimo_ano_escuderia", (escuderia_id,))
                     primeiro_ano, ultimo_ano = cursor.fetchone()
+                    primeiro_ano = '---' if not primeiro_ano else primeiro_ano
+                    ultimo_ano = '---' if not ultimo_ano else ultimo_ano
 
                     result = (quantidade_vitorias, total_pilotos, primeiro_ano, ultimo_ano)
                 except (Exception, psycopg2.Error) as error:
@@ -150,6 +152,9 @@ class BancoDados():
 
                     cursor.callproc("get_primeiro_ultimo_ano_piloto", (piloto_id,))
                     primeiro_ano, ultimo_ano = cursor.fetchone()
+                    primeiro_ano = '---' if not primeiro_ano else primeiro_ano
+                    ultimo_ano = '---' if not ultimo_ano else ultimo_ano
+
                     result = (resultado, primeiro_ano, ultimo_ano)
                 except (Exception, psycopg2.Error) as error:
                     print("Erro:", error)

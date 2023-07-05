@@ -138,7 +138,8 @@ CREATE TABLE LogTable (
   userid INTEGER NOT NULL,
   login_date DATE,
   login_time TIME,
-  CONSTRAINT fk_userid FOREIGN KEY (userid) REFERENCES USERS (UserId)
+  CONSTRAINT pk_logtable PRIMARY KEY (userid, login_date, login_time),
+  CONSTRAINT fk_userid FOREIGN KEY (userid) REFERENCES USERS (UserId) ON DELETE CASCADE
 );
 
 -- Inserindo admin na tabela Users

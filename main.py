@@ -106,7 +106,7 @@ while True:
 
     print("\n                       Autenticando", end="")
 
-    # carregando()
+    carregando()
 
     if fazer_login(username, password):
         msg_sair()

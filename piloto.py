@@ -31,9 +31,6 @@ class Piloto:
             elif opcao == '0':
                 break
 
-            else:
-                print("opção inválida")
-
     def tela_get_all_vitorias_piloto(self):
         limpa_tela()
         print("{:-^54}".format(" Listar vitórias"), end="\n\n\n")
@@ -65,7 +62,7 @@ class Piloto:
 
         resultados = Bd.get_contagem_status_do_piloto(self.id)
 
-        print(f"Quantidade resultados do piloto {self.nome} por status \n")
+        print(f"Quantidade de resultados do piloto {self.nome} por status \n")
         print("{:^18} | {:^10}".format("STATUS", "QUANTIDADE"))
         print("–"*31)
         for resultado in resultados:

@@ -119,7 +119,7 @@ class Admin:
         for status in todos_status:
             print("{:^18} | {:>8}".format(status['status'], status['quantidade_resultados']))
 
-        print("\nPressione [ENTER] para continuar.")
+        print("\nPressione [ENTER] para voltar à tela de relatórios.")
         input()
 
     def tela_aeroportos_proximos_cidade(self):

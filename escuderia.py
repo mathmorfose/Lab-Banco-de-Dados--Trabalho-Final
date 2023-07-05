@@ -35,8 +35,6 @@ class Escuderia:
                 self.tela_get_contagem_status_da_escuderia()
             elif opcao == '0':
                 break
-            else:
-                print("opção inválida")
 
     def consultar_piloto(self):
         while True:
@@ -76,7 +74,7 @@ class Escuderia:
 
         pilotos = Bd.get_numero_vitorias_pilotos_da_escuderia(self.id)
 
-        print(f"Pilotos da escuderia {self.nome} e suas vitórias \n")
+        print(f"Pilotos da {self.nome} e suas vitórias pela escuderia \n")
         print("{:^35} | {:^8}".format("PILOTO", "VITÓRIAS"))
         print("–"*46)
         for piloto in pilotos:
@@ -91,7 +89,7 @@ class Escuderia:
 
         resultados = Bd.get_contagem_status_da_escuderia(self.id)
 
-        print(f"Quantidade resultados da escuderia {self.nome} por status \n")
+        print(f"Quantidade de resultados da escuderia {self.nome} por status \n")
         print("{:^18} | {:^10}".format("STATUS", "QUANTIDADE"))
         print("–"*31)
         for resultado in resultados:
