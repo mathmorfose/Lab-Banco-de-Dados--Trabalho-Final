@@ -255,6 +255,7 @@ USING BTREE(type)
 WHERE isocountry = 'BR' AND type IN ('medium_airport', 'large_airport');
 ;
 
+DROP FUNCTION IF EXISTS get_aeroportos_proximos(text); --tive que dropar pq ta mudei o numero de argumentos retornados
 CREATE OR REPLACE FUNCTION get_aeroportos_proximos(nome_cidade TEXT)
 RETURNS TABLE (
     cidade TEXT,
@@ -262,7 +263,8 @@ RETURNS TABLE (
     aeroporto TEXT,
     cidade_aeroporto TEXT,
     distancia NUMERIC,
-    type CHAR(15)
+    type CHAR(15),
+    estado CHAR(4)
 )
 AS $$
 BEGIN
@@ -274,7 +276,7 @@ BEGIN
             LL_to_Earth(A.latdeg, A.longdeg), 
             LL_to_Earth(C.lat, C.long)
         )/1000)::numeric, 2) distancia,
-        A.type 
+        A.type, A.isoregion
     FROM airports A
     JOIN geocities15k C ON Earth_Distance(
         LL_to_Earth(
