@@ -83,9 +83,15 @@ def msg_sair():
 
 while True:
     limpa_tela()
-    print(f"---------------------- TELA DE LOGIN ---------------------- \n\
-                                                                        \n\
-    Digite o usuario e pressione [ENTER], repita para a senha.            \n")
+    print("---------------------- TELA DE LOGIN ----------------------")
+    print("""
+               ___                   __       ___
+              / _/__  ______ _ __ __/ /__ _  <  /
+             / _/ _ \/ __/  ' \ // / / _ `/  / / 
+            /_/ \___/_/ /_/_/_\_,_/_/\_,_/  /_/    
+
+    """)
+    print("Digite o usuario e pressione [ENTER], repita para a senha.            \n")
 
     username = input("Usuário: ")
     password = input("Senha: ")
