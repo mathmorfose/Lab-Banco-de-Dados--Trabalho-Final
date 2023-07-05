@@ -11,8 +11,8 @@ CONNECTION_PARAMS = {
 }
 
 
-class BANCO_DADOS():
-
+class BancoDados():
+    @staticmethod
     def select(query):
         selected_rows = None
 
@@ -31,6 +31,7 @@ class BANCO_DADOS():
         conn.close()
         return selected_rows
 
+    @staticmethod
     def insert_construct(constructor_ref, name, nationality, url):
         result = None
 
@@ -51,6 +52,7 @@ class BANCO_DADOS():
         conn.close()
         return result
 
+    @staticmethod
     def insert_driver(driver_ref, number, code, forename, surname, date_of_birth, nationality):
         result = None
 
@@ -71,6 +73,7 @@ class BANCO_DADOS():
         conn.close()
         return result
 
+    @staticmethod
     def insert_log_table(user):
         result = None
 
@@ -91,6 +94,7 @@ class BANCO_DADOS():
         conn.close()
         return result
 
+    @staticmethod
     def consultar_pilotos_por_forename(forename, id_escuderia_logada):
         conn = psycopg2.connect(**CONNECTION_PARAMS)
         with conn:
@@ -109,6 +113,7 @@ class BANCO_DADOS():
         conn.close()
         return result
 
+    @staticmethod
     def overview_escuderia(escuderia_id):
         result = None
 
@@ -132,6 +137,7 @@ class BANCO_DADOS():
         conn.close()
         return result
 
+    @staticmethod
     def overview_piloto(piloto_id):
         result = None
 
@@ -150,6 +156,7 @@ class BANCO_DADOS():
         conn.close()
         return result
 
+    @staticmethod
     def get_contagem_resultados_status():
         result = None
 
@@ -169,6 +176,7 @@ class BANCO_DADOS():
         conn.close()
         return result
 
+    @staticmethod
     def get_aeroportos_proximos_cidade(cidade):
         result = None
 
@@ -184,6 +192,7 @@ class BANCO_DADOS():
         conn.close()
         return result
 
+    @staticmethod
     def get_numero_vitorias_pilotos_da_escuderia(id_escuderia):
         result = None
 
@@ -199,6 +208,7 @@ class BANCO_DADOS():
         conn.close()
         return result
 
+    @staticmethod
     def get_contagem_status_da_escuderia(id_escuderia):
         result = None
 
@@ -214,6 +224,7 @@ class BANCO_DADOS():
         conn.close()
         return result
 
+    @staticmethod
     def get_all_vitorias_piloto(id_piloto):
         result = None
 
@@ -229,6 +240,7 @@ class BANCO_DADOS():
         conn.close()
         return result
 
+    @staticmethod
     def get_contagem_status_do_piloto(id_piloto):
         result = None
 

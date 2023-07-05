@@ -1,4 +1,4 @@
-from bd import BANCO_DADOS as bd
+from bd import BancoDados as Bd
 from utils import limpa_tela
 
 
@@ -49,7 +49,7 @@ class Escuderia:
             if len(forename) <= 0:
                 return
 
-            pilotos = bd.consultar_pilotos_por_forename(forename, self.id)
+            pilotos = Bd.consultar_pilotos_por_forename(forename, self.id)
 
             if len(pilotos) <= 0:
                 print(f"\nNenhum piloto encontrado com o primeiro nome '{forename}' que tenha corrido pela escuderia logada.")
@@ -74,7 +74,7 @@ class Escuderia:
         limpa_tela()
         print("{:-^54}".format(" Listar pilotos e a quantidade de vitórias "), end="\n\n\n")
 
-        pilotos = bd.get_numero_vitorias_pilotos_da_escuderia(self.id)
+        pilotos = Bd.get_numero_vitorias_pilotos_da_escuderia(self.id)
 
         print(f"Pilotos da escuderia {self.nome} e suas vitórias \n")
         print("{:^35} | {:^8}".format("PILOTO", "VITÓRIAS"))
@@ -89,7 +89,7 @@ class Escuderia:
         limpa_tela()
         print("{:-^54}".format(" Listar quantidade de resultados para cada status "), end="\n\n\n")
 
-        resultados = bd.get_contagem_status_da_escuderia(self.id)
+        resultados = Bd.get_contagem_status_da_escuderia(self.id)
 
         print(f"Quantidade resultados da escuderia {self.nome} por status \n")
         print("{:^18} | {:^10}".format("STATUS", "QUANTIDADE"))

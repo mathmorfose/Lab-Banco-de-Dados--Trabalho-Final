@@ -1,4 +1,4 @@
-from bd import BANCO_DADOS as bd
+from bd import BancoDados as Bd
 from utils import limpa_tela
 
 
@@ -38,7 +38,7 @@ class Piloto:
         limpa_tela()
         print("{:-^54}".format(" Listar vitórias"), end="\n\n\n")
 
-        vitorias = bd.get_all_vitorias_piloto(self.id)
+        vitorias = Bd.get_all_vitorias_piloto(self.id)
 
         print(f"Vitórias do piloto {self.nome} \n")
 
@@ -63,7 +63,7 @@ class Piloto:
         limpa_tela()
         print("{:-^54}".format(" Listar quantidade de resultados para cada status "), end="\n\n\n")
 
-        resultados = bd.get_contagem_status_do_piloto(self.id)
+        resultados = Bd.get_contagem_status_do_piloto(self.id)
 
         print(f"Quantidade resultados do piloto {self.nome} por status \n")
         print("{:^18} | {:^10}".format("STATUS", "QUANTIDADE"))

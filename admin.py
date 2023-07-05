@@ -1,4 +1,4 @@
-from bd import BANCO_DADOS as bd
+from bd import BancoDados as Bd
 from utils import limpa_tela
 
 
@@ -52,7 +52,7 @@ class Admin:
             opcao = input("      Digite o número da opção: ")
 
             if opcao == '1':
-                if bd.insert_construct(constructor_ref, name, nationality, url):
+                if Bd.insert_construct(constructor_ref, name, nationality, url):
                     print("\nEscuderia cadastrada com sucesso. Pressione [ENTER] para continuar.")
                     input()
                     self.escuderias_quantidade += 1
@@ -92,7 +92,7 @@ class Admin:
             opcao = input("      Digite o número da opção: ")
 
             if opcao == '1':
-                if bd.insert_driver(driver_ref, number, code, forename, surname, birth_date, nationality):
+                if Bd.insert_driver(driver_ref, number, code, forename, surname, birth_date, nationality):
                     print("\nPiloto cadastrado com sucesso. Pressione [ENTER] para continuar.")
                     input()
                     self.pilotos_quantidade += 1
@@ -112,7 +112,7 @@ class Admin:
 
     def tela_contagem_resultados_status(self):
         limpa_tela()
-        todos_status = bd.get_contagem_resultados_status()
+        todos_status = Bd.get_contagem_resultados_status()
         print("{:-^60}".format(" Contagem de Resultados por Status em ordem decrescente "), end="\n\n\n")
         print("{:^18} | {:^9}".format("STATUS", "CONTAGEM"))
         print("—"*32)
@@ -133,7 +133,7 @@ class Admin:
             if len(cidade) <= 0:
                 return
 
-            aeroportos = bd.get_aeroportos_proximos_cidade(cidade)
+            aeroportos = Bd.get_aeroportos_proximos_cidade(cidade)
             if len(aeroportos) <= 0:
                 print(f"\nNenhum aeroporto encontrado próximo à cidade de '{cidade}'")
                 print("Pressione [ENTER] para pesquisar novamente.")
